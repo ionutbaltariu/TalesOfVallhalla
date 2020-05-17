@@ -27,8 +27,8 @@ public class MenuState extends State
             ///Apel al constructorului clasei de baza.
         super(refLink);
         background=ImageLoader.LoadImage("/menu.jpg");
-        if(State.GetState()==refLink.GetGame().getMenuState())
-            this.playMusic();
+//        if(State.GetState()==refLink.GetGame().getMenuState())
+//            this.playMusic();
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
