@@ -92,7 +92,7 @@ public class Map
         {
             for(int x = 0; x < width; x++)
             {
-                tiles[x][y] = MiddleEastMap(x, y);
+                tiles[x][y] = MiddleEastMap(y, x);
             }
         }
     }
