@@ -56,12 +56,18 @@ public class Hero extends Character
             ///Actualizeaza pozitia
         Move();
             ///Actualizeaza imaginea
-        if(refLink.GetKeyManager().left == true)
+        if(refLink.GetKeyManager().left)
         {
             image = Assets.heroLeft;
         }
-        if(refLink.GetKeyManager().right == true) {
+        if(refLink.GetKeyManager().right) {
             image = Assets.heroRight;
+        }
+        if(refLink.GetKeyManager().up) {
+            image = Assets.heroUp;
+        }
+        if(refLink.GetKeyManager().down) {
+            image = Assets.heroDown;
         }
     }
 
@@ -94,6 +100,7 @@ public class Hero extends Character
             xMove = speed;
         }
     }
+
 
     /*! \fn public void Draw(Graphics g)
         \brief Randeaza/deseneaza eroul in noua pozitie.

@@ -1,6 +1,7 @@
 package PaooGame.Items;
 
 import PaooGame.RefLinks;
+import PaooGame.Tiles.Tile;
 
 /*! \class public abstract class Character extends Item
     \brief Defineste notiunea abstracta de caracter/individ/fiinta din joc.
@@ -56,8 +57,24 @@ public abstract class Character extends Item
      */
     public void MoveX()
     {
+        int tx;
             ///Aduna la pozitia curenta numarul de pixeli cu care trebuie sa se deplaseze pe axa X.
-        x += xMove;
+        if(xMove>0) // caracterul se misca la dreapta
+        {
+            tx=(int)(x+xMove+bounds.x+bounds.width) / Tile.TILE_WIDTH;
+            if(!collision(tx,(int)(y + bounds.y) / Tile.TILE_HEIGHT)  && !collision(tx,(int)(y+bounds.y+bounds.height)/Tile.TILE_HEIGHT))
+            {
+                x+=xMove;
+            }
+        }
+        else // caracterul se misca la stanga
+        {
+            tx=(int)(x+xMove+bounds.x) / Tile.TILE_WIDTH;
+            if(!collision(tx,(int)(y + bounds.y) / Tile.TILE_HEIGHT)  && !collision(tx,(int)(y+bounds.y+bounds.height)/Tile.TILE_HEIGHT))
+            {
+                x+=xMove;
+            }
+        }
     }
 
     /*! \fn public void MoveY()
@@ -65,9 +82,32 @@ public abstract class Character extends Item
      */
     public void MoveY()
     {
+        int ty;
             ///Aduna la pozitia curenta numarul de pixeli cu care trebuie sa se deplaseze pe axa Y.
-        y += yMove;
+        if(yMove<0)
+        {
+            ty=(int)(y+yMove+bounds.y)/Tile.TILE_HEIGHT;
+            if(!collision((int)(x+bounds.x)/Tile.TILE_WIDTH,ty) && !collision((int)(x+bounds.x+bounds.width)/Tile.TILE_WIDTH,ty))
+            {
+                y+=yMove;
+            }
+        }
+        else if(yMove>=0)
+        {
+            ty=(int)(y+yMove+bounds.y+bounds.height)/Tile.TILE_HEIGHT;
+            if(!collision((int)(x+bounds.x)/Tile.TILE_WIDTH,ty) && !collision((int)(x+bounds.x+bounds.width)/Tile.TILE_WIDTH,ty))
+            {
+                y+=yMove;
+            }
+
+        }
     }
+
+    protected boolean collision(int x, int y)
+    {
+        return refLink.GetMap().GetTile(x,y).IsSolid();
+    }
+
 
     /*! \fn public int GetLife()
         \brief Returneaza viata caracterului.

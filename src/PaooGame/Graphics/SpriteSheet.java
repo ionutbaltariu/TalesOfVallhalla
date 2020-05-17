@@ -11,18 +11,21 @@ import java.awt.image.BufferedImage;
 public class SpriteSheet
 {
     private BufferedImage       spriteSheet;        /*!< Referinta catre obiectul BufferedImage ce contine sprite sheet-ul.*/
-    private static final int    tileWidth   = 48;   /*!< Latimea unei dale din sprite sheet.*/
-    private static final int    tileHeight  = 48;   /*!< Inaltime unei dale din sprite sheet.*/
+    private  int    tileWidth  ;   /*!< Latimea unei dale din sprite sheet.*/
+    private  int    tileHeight ;   /*!< Inaltime unei dale din sprite sheet.*/
 
     /*! \fn public SpriteSheet(BufferedImage sheet)
         \brief Constructor, initializeaza spriteSheet.
 
         \param buffImg Un obiect BufferedImage valid.
      */
-    public SpriteSheet(BufferedImage buffImg)
+    public SpriteSheet(BufferedImage buffImg, int width, int height)
     {
             /// Retine referinta catre BufferedImage object.
         spriteSheet = buffImg;
+
+        this.tileHeight=height;
+        this.tileWidth=width;
     }
 
     /*! \fn public BufferedImage crop(int x, int y)

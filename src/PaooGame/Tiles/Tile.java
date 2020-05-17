@@ -19,8 +19,8 @@ public class Tile
     public static Tile treeTile         = new TreeTile(3);      /*!< Dala de tip copac*/
     public static Tile soilTile         = new SoilTile(4);      /*!< Dala de tip sol/pamant*/
 
-    public static final int TILE_WIDTH  = 48;                       /*!< Latimea unei dale.*/
-    public static final int TILE_HEIGHT = 48;                       /*!< Inaltimea unei dale.*/
+    public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/
+    public static final int TILE_HEIGHT = 32;                       /*!< Inaltimea unei dale.*/
 
     protected BufferedImage img;                                    /*!< Imaginea aferenta tipului de dala.*/
     protected final int id;                                         /*!< Id-ul unic aferent tipului de dala.*/

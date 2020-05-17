@@ -15,7 +15,7 @@ public class MountainTile extends Tile {
     public MountainTile(int id)
     {
             /// Apel al constructorului clasei de baza
-        super(Assets.mountain, id);
+        super(Assets.rock, id);
     }
 
     /*! \fn public boolean IsSolid()
