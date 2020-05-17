@@ -145,10 +145,10 @@ public class Game implements Runnable
             /// sau mai bine spus de 60 ori pe secunda.
 
         final int framesPerSecond   = 60; /*!< Constanta intreaga initializata cu numarul de frame-uri pe secunda.*/
-        final double timeFrame      = 1000000000 / framesPerSecond; /*!< Durata unui frame in nanosecunde.*/
+        final double timeFrame      = 1000000000f / framesPerSecond; /*!< Durata unui frame in nanosecunde.*/
 
             /// Atat timp timp cat threadul este pornit Update() & Draw()
-        while (runState == true)
+        while (runState)
         {
                 /// Se obtine timpul curent
             curentTime = System.nanoTime();
@@ -182,11 +182,6 @@ public class Game implements Runnable
                 /// Threadul creat este lansat in executie (va executa metoda run())
             gameThread.start();
         }
-        else
-        {
-                /// Thread-ul este creat si pornit deja
-            return;
-        }
     }
 
     /*! \fn public synchronized void stop()
@@ -196,7 +191,7 @@ public class Game implements Runnable
      */
     public synchronized void StopGame()
     {
-        if(runState == true)
+        if(runState)
         {
                 /// Actualizare stare thread
             runState = false;
@@ -212,11 +207,6 @@ public class Game implements Runnable
                     /// In situatia in care apare o exceptie pe ecran vor fi afisate informatii utile pentru depanare.
                 ex.printStackTrace();
             }
-        }
-        else
-        {
-                /// Thread-ul este oprit deja.
-            return;
         }
     }
 
@@ -324,5 +314,7 @@ public class Game implements Runnable
     {
         return menuState;
     }
+
+    public State getAboutState() { return aboutState; }
 }
 

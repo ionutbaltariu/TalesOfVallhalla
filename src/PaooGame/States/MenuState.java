@@ -29,8 +29,7 @@ public class MenuState extends State
         super(refLink);
         background=ImageLoader.LoadImage("/menu.jpg");
         hoverElement=ImageLoader.LoadImage("/optionHover.png");
-//        if(State.GetState()==refLink.GetGame().getMenuState())
-//            this.playMusic();
+        //this.playMusic();
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
@@ -44,7 +43,7 @@ public class MenuState extends State
         {
             if(refLink.GetMouseManager().getMouseY()>=576 && refLink.GetMouseManager().getMouseY()<=693)
             {
-                if(refLink.GetMouseManager().leftPressed)
+                if(refLink.GetMouseManager().leftClickPressed())
                 {
                     this.MenuSelection();
                     State.SetState(refLink.GetGame().getPlayState());
@@ -54,10 +53,9 @@ public class MenuState extends State
             if(refLink.GetMouseManager().getMouseY()>=709 && refLink.GetMouseManager().getMouseY()<=823)
             {
                 //asta o sa fie settings state.
-                if(refLink.GetMouseManager().leftPressed)
+                if(refLink.GetMouseManager().leftClickPressed())
                 {
                     this.MenuSelection();
-                    State.SetState(refLink.GetGame().getPlayState());
                 }
 
             }
@@ -65,7 +63,7 @@ public class MenuState extends State
             // butonul EXIT - la apasarea acestuia se iese instant din aplicatie
             if(refLink.GetMouseManager().getMouseY()>=842 && refLink.GetMouseManager().getMouseY()<=956)
             {
-                if(refLink.GetMouseManager().leftPressed)
+                if(refLink.GetMouseManager().leftClickPressed())
                 {
                     this.MenuSelection();
                     System.exit(0);
@@ -84,7 +82,8 @@ public class MenuState extends State
     public void Draw(Graphics g)
     {
         g.drawImage(background,0,0,refLink.GetWidth(),refLink.GetHeight(),null);
-        if(refLink.GetMouseManager().getMouseX()>=495 && refLink.GetMouseManager().getMouseX()<=812) //cordonate calculate experimental folosind MousePressed + printuri
+        //folosim aceasta imbricare de if-uri pentru a printa un png de 114x114 pixeli care sa sugereze grafic butonul din meniu pe care
+        if(refLink.GetMouseManager().getMouseX()>=495 && refLink.GetMouseManager().getMouseX()<=812)
         {
             if(refLink.GetMouseManager().getMouseY()>=576 && refLink.GetMouseManager().getMouseY()<=693)
             {
@@ -103,20 +102,31 @@ public class MenuState extends State
                 g.drawImage(hoverElement,832,842,114,114,null);
             }
         }
+        // about button ( de reimplementat in viitor )
+        else if(refLink.GetMouseManager().getMouseX()>=31 && refLink.GetMouseManager().getMouseX()<=102)
+        {
+            if(refLink.GetMouseManager().getMouseY()>=738 && refLink.GetMouseManager().getMouseY()<=779)
+            {
+                if(refLink.GetMouseManager().leftClickPressed())
+                {
+                    State.SetState(refLink.GetGame().getAboutState());
+                }
+            }
+        }
     }
 
     //Functie care permite implementarea muzicii in aplicatie ( preluata )
     @Override
     public void playMusic() {
-        try{
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(MenuState.class.getResource("/m.wav"));
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioIn);
-            clip.start();
-        }
-        catch(UnsupportedAudioFileException | IOException | LineUnavailableException e)
-        {
-            e.getMessage();
+        if(State.GetState()==refLink.GetGame().getMenuState()) {
+            try {
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(MenuState.class.getResource("/m.wav"));
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioIn);
+                clip.start();
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                e.getMessage();
+            }
         }
     }
 

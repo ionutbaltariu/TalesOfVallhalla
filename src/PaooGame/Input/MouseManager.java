@@ -4,7 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MouseManager extends MouseAdapter {
-    public boolean leftPressed,rightPressed;
+    private boolean leftPressed,rightPressed;
     private int mouseX,mouseY;
 
     public MouseManager()
@@ -18,6 +18,7 @@ public class MouseManager extends MouseAdapter {
         if(e.getButton()==MouseEvent.BUTTON1) //left click = BUTTON1
         {
             leftPressed = true;
+            System.out.println(e.getX()+", "+e.getY());
         }
         if(e.getButton()==MouseEvent.BUTTON3) //right click = BUTTON3
             rightPressed=true;
@@ -25,8 +26,9 @@ public class MouseManager extends MouseAdapter {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(e.getButton()==MouseEvent.BUTTON1)
-            leftPressed=false;
+        if(e.getButton()==MouseEvent.BUTTON1) {
+            leftPressed = false;
+        }
         if(e.getButton()==MouseEvent.BUTTON3)
             rightPressed=false;
 
@@ -46,6 +48,7 @@ public class MouseManager extends MouseAdapter {
     public boolean rightClickPressed(){
         return rightPressed;
     }
+
     public int getMouseX()
     {
         return mouseX;
