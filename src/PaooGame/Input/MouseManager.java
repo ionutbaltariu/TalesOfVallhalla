@@ -17,7 +17,6 @@ public class MouseManager extends MouseAdapter {
         //detectarea click-ului apasat (left/right)
         if(e.getButton()==MouseEvent.BUTTON1) //left click = BUTTON1
         {
-            System.out.println(e.getX()+", "+e.getY());
             leftPressed = true;
         }
         if(e.getButton()==MouseEvent.BUTTON3) //right click = BUTTON3
@@ -38,6 +37,7 @@ public class MouseManager extends MouseAdapter {
         mouseX=e.getX();
         mouseY=e.getY();
     }
+
 
     public boolean leftClickPressed(){
         return leftPressed;

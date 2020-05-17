@@ -16,6 +16,7 @@ import java.io.IOException;
 public class MenuState extends State
 {
     private BufferedImage background;
+    private BufferedImage hoverElement;
     /*! \fn public MenuState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
 
@@ -27,6 +28,7 @@ public class MenuState extends State
             ///Apel al constructorului clasei de baza.
         super(refLink);
         background=ImageLoader.LoadImage("/menu.jpg");
+        hoverElement=ImageLoader.LoadImage("/optionHover.png");
 //        if(State.GetState()==refLink.GetGame().getMenuState())
 //            this.playMusic();
     }
@@ -49,11 +51,23 @@ public class MenuState extends State
                 }
             }
 
+            if(refLink.GetMouseManager().getMouseY()>=709 && refLink.GetMouseManager().getMouseY()<=823)
+            {
+                //asta o sa fie settings state.
+                if(refLink.GetMouseManager().leftPressed)
+                {
+                    this.MenuSelection();
+                    State.SetState(refLink.GetGame().getPlayState());
+                }
+
+            }
+
             // butonul EXIT - la apasarea acestuia se iese instant din aplicatie
             if(refLink.GetMouseManager().getMouseY()>=842 && refLink.GetMouseManager().getMouseY()<=956)
             {
                 if(refLink.GetMouseManager().leftPressed)
                 {
+                    this.MenuSelection();
                     System.exit(0);
                 }
             }
@@ -70,6 +84,25 @@ public class MenuState extends State
     public void Draw(Graphics g)
     {
         g.drawImage(background,0,0,refLink.GetWidth(),refLink.GetHeight(),null);
+        if(refLink.GetMouseManager().getMouseX()>=495 && refLink.GetMouseManager().getMouseX()<=812) //cordonate calculate experimental folosind MousePressed + printuri
+        {
+            if(refLink.GetMouseManager().getMouseY()>=576 && refLink.GetMouseManager().getMouseY()<=693)
+            {
+                g.drawImage(hoverElement,832,576,114,114,null);
+            }
+
+            if(refLink.GetMouseManager().getMouseY()>=709 && refLink.GetMouseManager().getMouseY()<=823)
+            {
+                //asta o sa fie settings state.
+                g.drawImage(hoverElement,832,709,114,114,null);
+            }
+
+            // butonul EXIT - la apasarea acestuia se iese instant din aplicatie
+            if(refLink.GetMouseManager().getMouseY()>=842 && refLink.GetMouseManager().getMouseY()<=956)
+            {
+                g.drawImage(hoverElement,832,842,114,114,null);
+            }
+        }
     }
 
     //Functie care permite implementarea muzicii in aplicatie ( preluata )
