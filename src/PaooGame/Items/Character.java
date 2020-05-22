@@ -159,6 +159,7 @@ public abstract class Character extends Item
         return yMove;
     }
 
+
     /*! \fn public void SetXMove(float xMove)
         \brief Seteaza distanta in pixeli pe axa X cu care va fi actualizata pozitia caracterului.
      */
