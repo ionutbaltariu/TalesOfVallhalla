@@ -103,6 +103,9 @@ public abstract class Character extends Item
         }
     }
 
+    /*! \fn public boolean collision(int x, int y)
+        \brief returneaza daca tile-ul de la coordonatele (x,y) este solid pentru a putea implementa coliziunile.
+     */
     protected boolean collision(int x, int y)
     {
         return refLink.GetMap().GetTile(x,y).IsSolid();

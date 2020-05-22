@@ -36,7 +36,7 @@ public class Hero extends Character
         normalBounds.x = 16;
         normalBounds.y = 16;
         normalBounds.width = 16;
-        normalBounds.height = 32;
+        normalBounds.height = 30;
 
             ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea de atac
         attackBounds.x = 10;

@@ -41,9 +41,4 @@ public class SettingsState extends State
     {
 
     }
-
-    @Override
-    public void playMusic() {
-
-    }
 }

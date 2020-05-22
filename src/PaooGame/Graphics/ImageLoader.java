@@ -2,10 +2,7 @@ package PaooGame.Graphics;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-
-import static java.lang.System.exit;
 
 /*! \class public class ImageLoader
     \brief Clasa ce contine o metoda statica pentru incarcarea unei imagini in memorie.
@@ -20,7 +17,7 @@ public class ImageLoader
     public static BufferedImage LoadImage(String path)
     {
             /// Avand in vedere exista situatii in care fisierul sursa sa nu poate fi accesat
-            /// metoda read() arunca o excpetie ce trebuie tratata
+            /// metoda read() arunca o exceptie ce trebuie tratata
         try
         {
                 /// Clasa ImageIO contine o serie de metode statice pentru file IO.

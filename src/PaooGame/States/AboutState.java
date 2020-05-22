@@ -24,7 +24,7 @@ public class AboutState extends State
         background= ImageLoader.LoadImage("/about.jpg");
     }
     /*! \fn public void Update()
-        \brief Actualizeaza starea curenta a meniu about.
+        \brief Actualizeaza starea curenta a state-ului about.
      */
     @Override
     public void Update()
@@ -61,10 +61,5 @@ public class AboutState extends State
     public void Draw(Graphics g)
     {
         g.drawImage(background,0,0,refLink.GetWidth(),refLink.GetHeight(),null);
-    }
-
-    @Override
-    public void playMusic() {
-
     }
 }

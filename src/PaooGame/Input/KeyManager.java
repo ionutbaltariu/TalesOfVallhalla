@@ -17,6 +17,7 @@ public class KeyManager implements KeyListener
     public boolean down;    /*!< Flag pentru tasta "jos" apasata.*/
     public boolean left;    /*!< Flag pentru tasta "stanga" apasata.*/
     public boolean right;   /*!< Flag pentru tasta "dreapta" apasata.*/
+    public boolean esc;     /*!<Flag pentru tasta "ESC" apasata*/
 
     /*! \fn public KeyManager()
         \brief Constructorul clasei.
@@ -34,6 +35,7 @@ public class KeyManager implements KeyListener
         down  = keys[KeyEvent.VK_S];
         left  = keys[KeyEvent.VK_A];
         right = keys[KeyEvent.VK_D];
+        esc   = keys[KeyEvent.VK_ESCAPE];
     }
 
     /*! \fn public void keyPressed(KeyEvent e)
@@ -57,7 +59,7 @@ public class KeyManager implements KeyListener
     public void keyReleased(KeyEvent e)
     {
             ///se retine in vectorul de flaguri ca o tasta a fost eliberata.
-        keys[e.getKeyCode()] = false;
+            keys[e.getKeyCode()] = false;
     }
 
     /*! \fn public void keyTyped(KeyEvent e)
@@ -69,4 +71,5 @@ public class KeyManager implements KeyListener
     {
 
     }
+
 }

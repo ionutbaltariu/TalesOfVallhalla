@@ -7,9 +7,10 @@ import PaooGame.Input.MouseManager;
 import PaooGame.States.*;
 import PaooGame.Tiles.Tile;
 
-
+import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
 
 /*! \class Game
     \brief Clasa principala a intregului proiect. Implementeaza Game - Loop (Update -> Draw)
@@ -50,6 +51,7 @@ public class Game implements Runnable
     private boolean         runState;   /*!< Flag ce starea firului de executie.*/
     private Thread          gameThread; /*!< Referinta catre thread-ul de update si draw al ferestrei*/
     private BufferStrategy  bs;         /*!< Referinta catre un mecanism cu care se organizeaza memoria complexa pentru un canvas.*/
+
     /// Sunt cateva tipuri de "complex buffer strategies", scopul fiind acela de a elimina fenomenul de
     /// flickering (palpaire) a ferestrei.
     /// Modul in care va fi implementata aceasta strategie in cadrul proiectului curent va fi triplu buffer-at
@@ -105,8 +107,7 @@ public class Game implements Runnable
         Sunt construite elementele grafice (assets): dale, player, elemente active si pasive.
 
      */
-    private void InitGame()
-    {
+    private void InitGame() throws IOException, LineUnavailableException {
             /// Este construita fereastra grafica.
         Window.BuildGameWindow();
             ///Sa ataseaza ferestrei managerul de tastatura pentru a primi evenimentele furnizate de fereastra.
@@ -137,7 +138,11 @@ public class Game implements Runnable
     {
 
             /// Initializeaza obiectul game
-        InitGame();
+        try {
+            InitGame();
+        } catch (IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
         long oldTime = System.nanoTime();   /*!< Retine timpul in nanosecunde aferent frame-ului anterior.*/
         long curentTime;                    /*!< Retine timpul curent de executie.*/
 
@@ -156,7 +161,11 @@ public class Game implements Runnable
             if((curentTime - oldTime) > timeFrame)
             {
                 /// Actualizeaza pozitiile elementelor
-                Update();
+                try {
+                    Update();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 /// Deseneaza elementele grafica in fereastra.
                 Draw();
                 oldTime = curentTime;
@@ -215,8 +224,7 @@ public class Game implements Runnable
 
         Metoda este declarata privat deoarece trebuie apelata doar in metoda run()
      */
-    private void Update()
-    {
+    private void Update() throws InterruptedException {
             ///Determina starea tastelor
         keyManager.Update();
         ///Trebuie obtinuta starea curenta pentru care urmeaza a se actualiza starea, atentie trebuie sa fie diferita de null.
@@ -303,18 +311,37 @@ public class Game implements Runnable
     {
         return keyManager;
     }
+    /*! \fn public MouseManager GetMouseManager()
+      \brief Returneaza obiectul care gestioneaza comenzile de la mouse.
+   */
     public MouseManager GetMouseManager(){ return mouseManager;}
-
+    /*! \fn public State GetPlayState()
+          \brief Returneaza playState pentru a fi putea folosit in alte clase.
+                 Util atunci cand schimbam state-ul in menuState.
+       */
     public State getPlayState()
     {
         return playState;
     }
-
+    /*! \fn public State GetMenuState()
+          \brief Returneaza menuState pentru a fi putea folosit in alte clase.
+                 Util atunci cand schimbam state-ul in aboutState.
+       */
     public State getMenuState()
     {
         return menuState;
     }
-
+    /*! \fn public State GetAboutState()
+          \brief Returneaza aboutState pentru a fi putea folosit in alte clase.
+                 Util atunci cand schimbam state-ul in menuState.
+       */
     public State getAboutState() { return aboutState; }
+    /*! \fn public Thread getGameThread()
+          \brief Returneaza firul de executie pe care a fost plasat jocul.
+                 Folosit pentru a evita fenomenul de inregistrare a evenimentului MousePressed in ambele state-uri
+                 atunci cand se face tranzitia intre ele.
+                 La modul: [...].getGameThread.sleep(100)
+       */
+    public Thread getGameThread() {return gameThread; }
 }
 

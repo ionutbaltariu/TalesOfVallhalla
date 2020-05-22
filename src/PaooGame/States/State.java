@@ -32,15 +32,18 @@ public abstract class State
         currentState = state;
     }
 
+    /*! \fn public static state GetState()
+            \brief Returneaza starea curenta a jocului.
+                   Foarte util cand comutam intre states in meniu.
+
+         */
     public static State GetState()
     {
         return currentState;
     }
 
         ///Metoda abstracta destinata actualizarii starii curente
-    public abstract void Update();
+    public abstract void Update() throws InterruptedException;
         ///Metoda abstracta destinata desenarii starii curente
     public abstract void Draw(Graphics g);
-
-    public abstract void playMusic();
 }
