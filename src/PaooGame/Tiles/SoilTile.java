@@ -2,7 +2,7 @@ package PaooGame.Tiles;
 
 import PaooGame.Graphics.Assets;
 
-/*! \class public class SoilTile extends Tile
+/*! \class SoilTile extends Tile
     \brief Abstractizeaza notiunea de dala de tip sol/pamant.
  */
 public class SoilTile extends Tile

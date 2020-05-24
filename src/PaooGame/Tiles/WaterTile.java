@@ -2,7 +2,7 @@ package PaooGame.Tiles;
 
 import PaooGame.Graphics.Assets;
 
-/*! \class public class WaterTile extends Tile
+/*! \class WaterTile extends Tile
     \brief Abstractizeaza notiunea de dala de tip apa.
  */
 public class WaterTile extends Tile

@@ -1,6 +1,7 @@
 package PaooGame.GameWindow;
 
 import PaooGame.RefLinks;
+import PaooGame.States.State;
 
 import javax.swing.*;
 import java.awt.*;

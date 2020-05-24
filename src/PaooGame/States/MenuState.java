@@ -9,16 +9,16 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-/*! \class public class MenuState extends State
+/*! \class MenuState extends State
     \brief Implementeaza notiunea de menu pentru joc.
  */
 
 
 public class MenuState extends State
 {
-    private BufferedImage background;
-    private Clip menuMusic;
-    private Clip buttonClick;
+    private final BufferedImage background; /*!< Background-ul efectiv al meniului(facut in Photoshop).*/
+    private final Clip menuMusic;           /*!< Melodia care se aude in menuState.*/
+    private final Clip buttonClick;         /*!< Sunetul care se aude cand apasam un buton din meniu.*/
 
     /*! \fn public MenuState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
@@ -68,6 +68,7 @@ public class MenuState extends State
                 {
                     buttonClick.setFramePosition(0); // un soi de "reincarcare" a sunetului. mai degraba o setare a timeline-ului pe momentul 0
                     buttonClick.start(); //sunet pentru a dinamiza experienta de parcurgere a meniului
+                    State.SetState(refLink.GetGame().getSettingsState());
                 }
 
             }

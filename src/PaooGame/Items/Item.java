@@ -6,7 +6,7 @@ import java.awt.*;
 
 
 /*! \class Item
-    \brief. Implementeaza notiunea abstracta de entitate activa din joc, "element cu care se poate interactiona: monstru, turn etc.".
+    \brief Implementeaza notiunea abstracta de entitate activa din joc, "element cu care se poate interactiona: monstru, turn etc.".
  */
 public abstract class Item
 {

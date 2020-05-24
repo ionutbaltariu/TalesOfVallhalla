@@ -55,7 +55,6 @@ public class Game implements Runnable
     /// Sunt cateva tipuri de "complex buffer strategies", scopul fiind acela de a elimina fenomenul de
     /// flickering (palpaire) a ferestrei.
     /// Modul in care va fi implementata aceasta strategie in cadrul proiectului curent va fi triplu buffer-at
-
     ///                         |------------------------------------------------>|
     ///                         |                                                 |
     ///                 ****************          *****************        ***************
@@ -71,11 +70,12 @@ public class Game implements Runnable
     private State menuState;            /*!< Referinta catre menu.*/
     private State settingsState;        /*!< Referinta catre setari.*/
     private State aboutState;           /*!< Referinta catre about.*/
-    private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
-    private MouseManager mouseManager;
-    private RefLinks refLink;            /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
 
-    private Tile tile; /*!< variabila membra temporara. Este folosita in aceasta etapa doar pentru a desena ceva pe ecran.*/
+    private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile de la tastatura din partea utilizatorului.*/
+    private MouseManager mouseManager;  /*!< Referinta catre obiectul care gestioneaza intrarile mouse din partea utilizatorului.*/
+    private RefLinks refLink;           /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
+
+    private Tile tile;                  /*!< variabila membra temporara. Este folosita in aceasta etapa doar pentru a desena ceva pe ecran.*/
 
     /*! \fn public Game(String title, int width, int height)
         \brief Constructor de initializare al clasei Game.
@@ -313,9 +313,9 @@ public class Game implements Runnable
     }
     /*! \fn public MouseManager GetMouseManager()
       \brief Returneaza obiectul care gestioneaza comenzile de la mouse.
-   */
+     */
     public MouseManager GetMouseManager(){ return mouseManager;}
-    /*! \fn public State GetPlayState()
+    /*! \fn public State getPlayState()
           \brief Returneaza playState pentru a fi putea folosit in alte clase.
                  Util atunci cand schimbam state-ul in menuState.
        */
@@ -323,7 +323,7 @@ public class Game implements Runnable
     {
         return playState;
     }
-    /*! \fn public State GetMenuState()
+    /*! \fn public State getMenuState()
           \brief Returneaza menuState pentru a fi putea folosit in alte clase.
                  Util atunci cand schimbam state-ul in aboutState.
        */
@@ -331,11 +331,21 @@ public class Game implements Runnable
     {
         return menuState;
     }
-    /*! \fn public State GetAboutState()
+    /*! \fn public State getAboutState()
           \brief Returneaza aboutState pentru a fi putea folosit in alte clase.
                  Util atunci cand schimbam state-ul in menuState.
        */
     public State getAboutState() { return aboutState; }
+    /*! \fn public State getSettingsState()
+          \brief Returneaza setttingsState pentru a fi putea folosit in alte clase.
+                 Util atunci cand schimbam state-ul in settingsState.
+       */
+    public State getSettingsState() { return settingsState; }
+    /*! \fn public State getWindow()
+          \brief Returneaza setttingsState pentru a fi putea folosit in alte clase.
+                 Util atunci cand schimbam state-ul in settingsState.
+       */
+    public GameWindow getWindow() { return Window; }
     /*! \fn public Thread getGameThread()
           \brief Returneaza firul de executie pe care a fost plasat jocul.
                  Folosit pentru a evita fenomenul de inregistrare a evenimentului MousePressed in ambele state-uri

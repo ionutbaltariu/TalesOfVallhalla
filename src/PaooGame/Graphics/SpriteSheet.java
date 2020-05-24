@@ -2,7 +2,7 @@ package PaooGame.Graphics;
 
 import java.awt.image.BufferedImage;
 
-/*! \class public class SpriteSheet
+/*! \class SpriteSheet
     \brief Clasa retine o referinta catre o imagine formata din dale (sprite sheet)
 
     Metoda crop() returneaza o dala de dimensiuni fixe (o subimagine) din sprite sheet

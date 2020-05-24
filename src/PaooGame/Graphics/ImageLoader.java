@@ -4,7 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-/*! \class public class ImageLoader
+/*! \class ImageLoader
     \brief Clasa ce contine o metoda statica pentru incarcarea unei imagini in memorie.
  */
 public class ImageLoader

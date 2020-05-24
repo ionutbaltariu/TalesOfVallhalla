@@ -6,12 +6,13 @@ import PaooGame.RefLinks;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/*! \class public class AboutState extends State
+/*! \class AboutState extends State
     \brief Implementeaza notiunea de credentiale (about)
  */
 public class AboutState extends State
 {
-    BufferedImage background;
+    BufferedImage background; /*!< Background-ul efectiv din abouState.*/
+
     /*! \fn public AboutState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
 

@@ -3,7 +3,7 @@ package PaooGame.Input;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-/*! \class public class KeyManager implements KeyListener
+/*! \class KeyManager implements KeyListener
     \brief Gestioneaza intrarea (input-ul) de tastatura.
 
     Clasa citeste daca au fost apasata o tasta, stabiliteste ce tasta a fost actionata si seteaza corespunzator un flag.
@@ -13,11 +13,12 @@ import java.awt.event.KeyListener;
 public class KeyManager implements KeyListener
 {
     private boolean[] keys; /*!< Vector de flaguri pentru toate tastele. Tastele vor fi regasite dupa cod [0 - 255]*/
-    public boolean up;      /*!< Flag pentru tasta "sus" apasata.*/
-    public boolean down;    /*!< Flag pentru tasta "jos" apasata.*/
-    public boolean left;    /*!< Flag pentru tasta "stanga" apasata.*/
-    public boolean right;   /*!< Flag pentru tasta "dreapta" apasata.*/
+    public boolean up;      /*!< Flag pentru tasta "W" apasata.*/
+    public boolean down;    /*!< Flag pentru tasta "S" apasata.*/
+    public boolean left;    /*!< Flag pentru tasta "A" apasata.*/
+    public boolean right;   /*!< Flag pentru tasta "D" apasata.*/
     public boolean esc;     /*!<Flag pentru tasta "ESC" apasata*/
+    public boolean space;   /*!<Flag pentru tasta "SPACE" apasata*/
 
     /*! \fn public KeyManager()
         \brief Constructorul clasei.
@@ -36,6 +37,7 @@ public class KeyManager implements KeyListener
         left  = keys[KeyEvent.VK_A];
         right = keys[KeyEvent.VK_D];
         esc   = keys[KeyEvent.VK_ESCAPE];
+        space = keys[KeyEvent.VK_SPACE];
     }
 
     /*! \fn public void keyPressed(KeyEvent e)

@@ -2,7 +2,7 @@ package PaooGame.Tiles;
 
 import PaooGame.Graphics.Assets;
 
-/*! \class public class TreeTrunkTile extends Tile
+/*! \class TreeLeafTile extends Tile
     \brief Abstractizeaza notiunea de dala de tip treeLeaf.
  */
 public class TreeLeafTile extends Tile

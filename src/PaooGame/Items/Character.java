@@ -3,7 +3,7 @@ package PaooGame.Items;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
-/*! \class public abstract class Character extends Item
+/*! \class Character extends Item
     \brief Defineste notiunea abstracta de caracter/individ/fiinta din joc.
 
     Notiunea este definita doar de viata, viteza de deplasare si distanta cu care trebuie sa se
@@ -13,8 +13,10 @@ public abstract class Character extends Item
 {
     public static final int DEFAULT_LIFE            = 10;   /*!< Valoarea implicita a vietii unui caracter.*/
     public static final float DEFAULT_SPEED         = 3.0f; /*!< Viteza implicita a unu caracter.*/
-    public static final int DEFAULT_CREATURE_WIDTH  = 48;   /*!< Latimea implicita a imaginii caracterului.*/
-    public static final int DEFAULT_CREATURE_HEIGHT = 48;   /*!< Inaltimea implicita a imaginii caracterului.*/
+    public static final int DEFAULT_HERO_WIDTH  = 48;   /*!< Latimea implicita a imaginii caracterului.*/
+    public static final int DEFAULT_HERO_HEIGHT = 48;   /*!< Inaltimea implicita a imaginii caracterului.*/
+    public static final int DEFAULT_CREATURE_WIDTH  = 64;   /*!< Latimea implicita a imaginii caracterului.*/
+    public static final int DEFAULT_CREATURE_HEIGHT = 64;   /*!< Inaltimea implicita a imaginii caracterului.*/
 
     protected int life;     /*!< Retine viata caracterului.*/
     protected float speed;  /*!< Retine viteza de deplasare caracterului.*/
@@ -25,8 +27,8 @@ public abstract class Character extends Item
         \brief Constructor de initializare al clasei Character
 
         \param refLink Referinta catre obiectul shortcut (care retine alte referinte utile/necesare in joc).
-        \param x Pozitia de start pa axa X a caracterului.
-        \param y Pozitia de start pa axa Y a caracterului.
+        \param x Pozitia de start pe axa X a caracterului.
+        \param y Pozitia de start pe axa Y a caracterului.
         \param width Latimea imaginii caracterului.
         \param height Inaltimea imaginii caracterului.
      */
@@ -40,6 +42,18 @@ public abstract class Character extends Item
         xMove   = 0;
         yMove   = 0;
     }
+
+    public Character(RefLinks refLink, float x, float y, int width, int height, float speed, int life)
+    {
+        ///Apel constructor la clasei de baza
+        super(refLink, x,y, width, height);
+        //Seteaza pe valorile implicite pentru viata, viteza si distantele de deplasare
+        this.life = life;
+        this.speed = speed;
+        xMove   = 0;
+        yMove   = 0;
+    }
+
 
     /*! \fn public void Move()
         \brief Modifica pozitia caracterului
@@ -158,7 +172,6 @@ public abstract class Character extends Item
     {
         return yMove;
     }
-
 
     /*! \fn public void SetXMove(float xMove)
         \brief Seteaza distanta in pixeli pe axa X cu care va fi actualizata pozitia caracterului.

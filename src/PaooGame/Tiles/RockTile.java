@@ -2,7 +2,7 @@ package PaooGame.Tiles;
 
 import PaooGame.Graphics.Assets;
 
-/*! \class public class RockTile extends Tile
+/*! \class RockTile extends Tile
     \brief Abstractizeaza notiunea de dala de tip piatra.
  */
 public class RockTile extends Tile{

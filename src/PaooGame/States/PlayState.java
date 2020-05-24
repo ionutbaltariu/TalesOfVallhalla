@@ -2,22 +2,23 @@ package PaooGame.States;
 
 import PaooGame.Graphics.Assets;
 import PaooGame.Graphics.ImageLoader;
+import PaooGame.Items.Enemy;
 import PaooGame.Items.Hero;
 import PaooGame.RefLinks;
 import PaooGame.Maps.Map;
 
 import java.awt.*;
 
-import javax.swing.*;
 
 import java.awt.image.BufferedImage;
 
-/*! \class public class PlayState extends State
+/*! \class PlayState extends State
     \brief Implementeaza/controleaza jocul.
  */
 public class PlayState extends State
 {
     private Hero hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
+    private Enemy enemyDeath;
     private Map map;    /*!< Referinta catre harta curenta.*/
     boolean wasEscPressed;  /*!< Flag care sa indice daca a fost apasata tasta esc. Ne va folosi la popup-ul "Are you sure you want to exit[..]"*/
 
@@ -38,6 +39,7 @@ public class PlayState extends State
         refLink.SetMap(map);
             ///Construieste eroul
         hero = new Hero(refLink,32, 32);
+        enemyDeath = new Enemy(refLink,700,700,50,48,2.2f,25);
         suspend= ImageLoader.LoadImage("/suspend.png");
     }
 
@@ -49,6 +51,7 @@ public class PlayState extends State
     public void Update() throws InterruptedException {
         map.Update();
         hero.Update();
+        enemyDeath.Update(hero);
         if(wasEscPressed)
         {
             if(refLink.GetMouseManager().getMouseY()>=575 && refLink.GetMouseManager().getMouseY()<=690)
@@ -83,6 +86,7 @@ public class PlayState extends State
     {
         map.Draw(g);
         hero.Draw(g);
+        enemyDeath.Draw(g);
         if(refLink.GetKeyManager().esc)
         {
             wasEscPressed=true;
@@ -103,6 +107,5 @@ public class PlayState extends State
                 }
             }
         }
-
     }
 }

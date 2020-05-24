@@ -3,7 +3,7 @@ package PaooGame.Tiles;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/*! \class public class Tile
+/*! \class Tile
     \brief Retine toate dalele intr-un vector si ofera posibilitatea regasirii dupa un id.
  */
 public class Tile

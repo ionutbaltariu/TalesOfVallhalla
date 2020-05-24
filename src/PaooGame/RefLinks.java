@@ -5,7 +5,7 @@ import PaooGame.Maps.Map;
 
 import PaooGame.Input.KeyManager;
 
-/*! \class public class RefLinks
+/*! \class RefLinks
     \brief Clasa ce retine o serie de referinte ale unor elemente pentru a fi usor accesibile.
 
     Altfel ar trebui ca functiile respective sa aiba o serie intreaga de parametri si ar ingreuna programarea.

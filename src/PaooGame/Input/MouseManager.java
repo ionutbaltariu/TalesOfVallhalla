@@ -3,7 +3,7 @@ package PaooGame.Input;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-/*! \class public class MouseManager extends MouseAdapter
+/*! \class MouseManager extends MouseAdapter
     \brief Gestioneaza intrarea (input-ul) de la mouse.
 
     Clasa citeste daca au fost apasat un click si seteaza corespunzator un flag.
@@ -11,8 +11,10 @@ import java.awt.event.MouseEvent;
     ca click-ul respectiv a fost apasat, iar daca este false, nu a fost apasat.
  */
 public class MouseManager extends MouseAdapter {
-    private boolean leftPressed,rightPressed;
-    private int mouseX,mouseY;
+    private boolean leftPressed;  /*!< Flag pentru contorizarea apasarii clickului stang.*/
+    private boolean rightPressed; /*!< Flag pentru contorizarea apasarii clickului drept.*/
+    private int mouseX;           /*!< Locatia pe axa X a mouse-ului.*/
+    private int mouseY;           /*!< Locatia pe axa Y a mouse-ului.*/
 
     /*! \fn public MouseManager
         \brief constructor nefolosit in stagiul curent al proiectului.

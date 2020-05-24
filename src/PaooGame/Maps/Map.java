@@ -5,7 +5,7 @@ import PaooGame.Tiles.Tile;
 
 import java.awt.*;
 
-/*! \class public class Map
+/*! \class Map
     \brief Implementeaza notiunea de harta a jocului.
  */
 public class Map

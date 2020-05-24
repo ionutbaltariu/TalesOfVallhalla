@@ -2,9 +2,10 @@ package PaooGame.States;
 
 import PaooGame.RefLinks;
 
+import javax.swing.*;
 import java.awt.*;
 
-/*! \class public class SettingsState extends State
+/*! \class SettingsState extends State
     \brief Implementeaza notiunea de settings pentru joc.
 
     Aici setarile vor trebui salvate/incarcate intr-un/dintr-un fisier/baza de date sqlite.
@@ -20,6 +21,8 @@ public class SettingsState extends State
     {
             ///Apel al construcotrului clasei de baza.
         super(refLink);
+        JTextField y = new JTextField("pIZDA MASII");
+        refLink.GetGame().getWindow().GetWindowFrame().getContentPane().add(y);
     }
 
     /*! \fn public void Update()

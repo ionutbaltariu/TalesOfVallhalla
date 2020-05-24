@@ -2,7 +2,7 @@ package PaooGame.Tiles;
 
 import PaooGame.Graphics.Assets;
 
-/*! \class public class LavaTile extends Tile
+/*! \class LavaTile extends Tile
     \brief Abstractizeaza notiunea de dala de tip lava.
  */
 public class LavaTile extends Tile{
