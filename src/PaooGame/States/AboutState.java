@@ -1,18 +1,15 @@
 package PaooGame.States;
 
-import PaooGame.Graphics.ImageLoader;
+import PaooGame.Graphics.Assets;
 import PaooGame.RefLinks;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /*! \class AboutState extends State
     \brief Implementeaza notiunea de credentiale (about)
  */
 public class AboutState extends State
 {
-    BufferedImage background; /*!< Background-ul efectiv din abouState.*/
-
     /*! \fn public AboutState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
 
@@ -22,7 +19,6 @@ public class AboutState extends State
     {
             ///Apel al constructorului clasei de baza.
         super(refLink);
-        background= ImageLoader.LoadImage("/about.jpg");
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a state-ului about.
@@ -61,6 +57,6 @@ public class AboutState extends State
     @Override
     public void Draw(Graphics g)
     {
-        g.drawImage(background,0,0,refLink.GetWidth(),refLink.GetHeight(),null);
+        g.drawImage(Assets.aboutBackground,0,0,refLink.GetWidth(),refLink.GetHeight(),null);
     }
 }

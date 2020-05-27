@@ -38,14 +38,6 @@ public class RefLinks
     */
     public MouseManager GetMouseManager(){ return game.GetMouseManager();}
 
-    /*! \fn public Thread GetGameThread()
-          \brief Returneaza firul de executie pe care a fost plasat jocul.
-                 Folosit pentru a evita fenomenul de inregistrare a evenimentului MousePressed in ambele state-uri
-                 atunci cand se face tranzitia intre ele.
-                 La modul: [...].getGameThread.sleep(100)
-     */
-    public Thread GetGameThread() {return game.getGameThread();}
-
     /*! \fn public int GetWidth()
         \brief Returneaza latimea ferestrei jocului.
      */
@@ -97,4 +89,9 @@ public class RefLinks
     {
         this.map = map;
     }
+
+    /*! \fn public DBHandler GetDatabase()
+        \brief Returneaza DBHandler-ul pe care-l folosim pentru a incarca/schimba setari sau salvari.
+    */
+    public DBHandler GetDatabase() { return game.getDatabase(); }
 }

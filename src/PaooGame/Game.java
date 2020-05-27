@@ -11,6 +11,7 @@ import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /*! \class Game
     \brief Clasa principala a intregului proiect. Implementeaza Game - Loop (Update -> Draw)
@@ -51,6 +52,7 @@ public class Game implements Runnable
     private boolean         runState;   /*!< Flag ce starea firului de executie.*/
     private Thread          gameThread; /*!< Referinta catre thread-ul de update si draw al ferestrei*/
     private BufferStrategy  bs;         /*!< Referinta catre un mecanism cu care se organizeaza memoria complexa pentru un canvas.*/
+    private final DBHandler database;
 
     /// Sunt cateva tipuri de "complex buffer strategies", scopul fiind acela de a elimina fenomenul de
     /// flickering (palpaire) a ferestrei.
@@ -71,8 +73,8 @@ public class Game implements Runnable
     private State settingsState;        /*!< Referinta catre setari.*/
     private State aboutState;           /*!< Referinta catre about.*/
 
-    private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile de la tastatura din partea utilizatorului.*/
-    private MouseManager mouseManager;  /*!< Referinta catre obiectul care gestioneaza intrarile mouse din partea utilizatorului.*/
+    private final KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile de la tastatura din partea utilizatorului.*/
+    private final MouseManager mouseManager;  /*!< Referinta catre obiectul care gestioneaza intrarile mouse din partea utilizatorului.*/
     private RefLinks refLink;           /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
 
     private Tile tile;                  /*!< variabila membra temporara. Este folosita in aceasta etapa doar pentru a desena ceva pe ecran.*/
@@ -87,8 +89,7 @@ public class Game implements Runnable
         \param width Latimea ferestrei in pixeli.
         \param height Inaltimea ferestrei in pixeli.
      */
-    public Game(String title, int width, int height)
-    {
+    public Game(String title, int width, int height) {
             /// Obiectul GameWindow este creat insa fereastra nu este construita
             /// Acest lucru va fi realizat in metoda init() prin apelul
             /// functiei BuildGameWindow();
@@ -98,6 +99,7 @@ public class Game implements Runnable
             ///Construirea obiectului de gestiune a evenimentelor de tastatura
         keyManager = new KeyManager();
         mouseManager= new MouseManager();
+        database = new DBHandler();
     }
 
     /*! \fn private void init()
@@ -107,7 +109,7 @@ public class Game implements Runnable
         Sunt construite elementele grafice (assets): dale, player, elemente active si pasive.
 
      */
-    private void InitGame() throws IOException, LineUnavailableException {
+    private void InitGame() throws IOException, LineUnavailableException, SQLException {
             /// Este construita fereastra grafica.
         Window.BuildGameWindow();
             ///Sa ataseaza ferestrei managerul de tastatura pentru a primi evenimentele furnizate de fereastra.
@@ -140,7 +142,7 @@ public class Game implements Runnable
             /// Initializeaza obiectul game
         try {
             InitGame();
-        } catch (IOException | LineUnavailableException e) {
+        } catch (IOException | LineUnavailableException | SQLException e) {
             e.printStackTrace();
         }
         long oldTime = System.nanoTime();   /*!< Retine timpul in nanosecunde aferent frame-ului anterior.*/
@@ -163,11 +165,15 @@ public class Game implements Runnable
                 /// Actualizeaza pozitiile elementelor
                 try {
                     Update();
-                } catch (InterruptedException e) {
+                } catch (InterruptedException | SQLException e) {
                     e.printStackTrace();
                 }
                 /// Deseneaza elementele grafica in fereastra.
-                Draw();
+                try {
+                    Draw();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
                 oldTime = curentTime;
             }
         }
@@ -224,7 +230,7 @@ public class Game implements Runnable
 
         Metoda este declarata privat deoarece trebuie apelata doar in metoda run()
      */
-    private void Update() throws InterruptedException {
+    private void Update() throws InterruptedException, SQLException {
             ///Determina starea tastelor
         keyManager.Update();
         ///Trebuie obtinuta starea curenta pentru care urmeaza a se actualiza starea, atentie trebuie sa fie diferita de null.
@@ -246,8 +252,7 @@ public class Game implements Runnable
 
         Metoda este declarata privat deoarece trebuie apelata doar in metoda run()
      */
-    private void Draw()
-    {
+    private void Draw() throws SQLException {
             /// Returnez bufferStrategy pentru canvasul existent
         bs = Window.GetCanvas().getBufferStrategy();
             /// Verific daca buffer strategy a fost construit sau nu
@@ -341,17 +346,14 @@ public class Game implements Runnable
                  Util atunci cand schimbam state-ul in settingsState.
        */
     public State getSettingsState() { return settingsState; }
-    /*! \fn public State getWindow()
-          \brief Returneaza setttingsState pentru a fi putea folosit in alte clase.
-                 Util atunci cand schimbam state-ul in settingsState.
+    /*! \fn public GameWindow getWindow()
+          \brief Returneaza un obiect de tip GameWindow.
        */
     public GameWindow getWindow() { return Window; }
-    /*! \fn public Thread getGameThread()
-          \brief Returneaza firul de executie pe care a fost plasat jocul.
-                 Folosit pentru a evita fenomenul de inregistrare a evenimentului MousePressed in ambele state-uri
-                 atunci cand se face tranzitia intre ele.
-                 La modul: [...].getGameThread.sleep(100)
-       */
-    public Thread getGameThread() {return gameThread; }
+
+    /*! \fn public DBHandler getDatabase()
+        \brief Returneaza DBHandler-ul pe care-l folosim pentru a incarca/schimba setari sau salvari.
+     */
+    public DBHandler getDatabase() { return database; }
 }
 

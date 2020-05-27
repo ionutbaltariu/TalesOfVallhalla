@@ -15,13 +15,12 @@ public abstract class Character extends Item
     public static final float DEFAULT_SPEED         = 3.0f; /*!< Viteza implicita a unu caracter.*/
     public static final int DEFAULT_HERO_WIDTH  = 48;   /*!< Latimea implicita a imaginii caracterului.*/
     public static final int DEFAULT_HERO_HEIGHT = 48;   /*!< Inaltimea implicita a imaginii caracterului.*/
-    public static final int DEFAULT_CREATURE_WIDTH  = 64;   /*!< Latimea implicita a imaginii caracterului.*/
-    public static final int DEFAULT_CREATURE_HEIGHT = 64;   /*!< Inaltimea implicita a imaginii caracterului.*/
 
-    protected int life;     /*!< Retine viata caracterului.*/
-    protected float speed;  /*!< Retine viteza de deplasare caracterului.*/
-    protected float xMove;  /*!< Retine noua pozitie a caracterului pe axa X.*/
-    protected float yMove;  /*!< Retine noua pozitie a caracterului pe axa Y.*/
+    protected int life;       /*!< Retine viata de inceput caracterului.*/
+    protected int actualLife; /*!< Retine viata in timp real a caracterului.*/
+    protected float speed;    /*!< Retine viteza de deplasare caracterului.*/
+    protected float xMove;    /*!< Retine noua pozitie a caracterului pe axa X.*/
+    protected float yMove;    /*!< Retine noua pozitie a caracterului pe axa Y.*/
 
     /*! \fn public Character(RefLinks refLink, float x, float y, int width, int height)
         \brief Constructor de initializare al clasei Character
@@ -38,6 +37,7 @@ public abstract class Character extends Item
         super(refLink, x,y, width, height);
             //Seteaza pe valorile implicite pentru viata, viteza si distantele de deplasare
         life    = DEFAULT_LIFE;
+        actualLife=life;
         speed   = DEFAULT_SPEED;
         xMove   = 0;
         yMove   = 0;
@@ -49,6 +49,7 @@ public abstract class Character extends Item
         super(refLink, x,y, width, height);
         //Seteaza pe valorile implicite pentru viata, viteza si distantele de deplasare
         this.life = life;
+        actualLife=life;
         this.speed = speed;
         xMove   = 0;
         yMove   = 0;
@@ -188,5 +189,17 @@ public abstract class Character extends Item
     {
         this.yMove = yMove;
     }
+
+    /*! \fn public void SetActualLife(int actualLife)
+        \brief Seteaza viata in timp real a eroului.
+     */
+    public void SetActualLife(int actualLife) { this.actualLife = actualLife; }
+
+    /*! \fn public int GetActualLife()
+        \brief Returneaza viata in timp real a eroului.
+     */
+    public int GetActualLife() { return this.actualLife; }
+
+
 }
 

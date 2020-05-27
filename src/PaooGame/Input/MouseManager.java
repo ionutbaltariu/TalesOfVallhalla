@@ -34,7 +34,7 @@ public class MouseManager extends MouseAdapter {
         if(e.getButton()==MouseEvent.BUTTON1) //left click = BUTTON1
         {
             leftPressed = true;
-            //System.out.println(e.getX()+", "+e.getY());
+            System.out.println(e.getX()+", "+e.getY());
         }
         if(e.getButton()==MouseEvent.BUTTON3) //right click = BUTTON3
             rightPressed=true;

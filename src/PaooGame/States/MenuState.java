@@ -1,13 +1,11 @@
 package PaooGame.States;
 
 import PaooGame.Graphics.Assets;
-import PaooGame.Graphics.ImageLoader;
+import PaooGame.Graphics.AudioLoader;
 import PaooGame.RefLinks;
 
-import javax.sound.sampled.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.sql.SQLException;
 
 /*! \class MenuState extends State
     \brief Implementeaza notiunea de menu pentru joc.
@@ -16,9 +14,8 @@ import java.io.IOException;
 
 public class MenuState extends State
 {
-    private final BufferedImage background; /*!< Background-ul efectiv al meniului(facut in Photoshop).*/
-    private final Clip menuMusic;           /*!< Melodia care se aude in menuState.*/
-    private final Clip buttonClick;         /*!< Sunetul care se aude cand apasam un buton din meniu.*/
+
+    private static boolean loadButtonClicked=false;
 
     /*! \fn public MenuState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
@@ -26,48 +23,58 @@ public class MenuState extends State
         \param refLink O referinta catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
      */
 
-    public MenuState(RefLinks refLink) throws LineUnavailableException, IOException {
+    public MenuState(RefLinks refLink) throws SQLException {
             ///Apel al constructorului clasei de baza.
         super(refLink);
-        background=ImageLoader.LoadImage("/menu.jpg");
+        AudioLoader.setVolume(Assets.menuMusic,refLink.GetDatabase().getMenuVolume());
 
-        menuMusic=AudioSystem.getClip();
-        menuMusic.open(Assets.menuBackgroundMusic);
-
-        buttonClick=AudioSystem.getClip();
-        buttonClick.open(Assets.buttonClickSound);
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
      */
     @Override
-    public void Update()
-    {
-        if(!menuMusic.isRunning()) { // daca Clipul audio nu este deja pornit
-            menuMusic.setFramePosition(0);  // il setam sa inceapa de la frameul 0 ( folositor cand revenim in meniu din playState )
-            menuMusic.start(); // pornim clipul audio
+    public void Update() throws InterruptedException {
+        if(!Assets.menuMusic.isRunning()) { // daca Clipul audio nu este deja pornit
+            Assets.menuMusic.setFramePosition(0);  // il setam sa inceapa de la frameul 0 ( folositor cand revenim in meniu din playState )
+            Assets.menuMusic.start(); // pornim clipul audio
         }
         //daca apasam pe butonul PlayGame (asa cum este vazut in menu.jpg) atunci, state-ul se schimba la PlayState
         if(refLink.GetMouseManager().getMouseX()>=495 && refLink.GetMouseManager().getMouseX()<=812) //cordonate calculate experimental folosind MousePressed + printuri
         {
-            if(refLink.GetMouseManager().getMouseY()>=576 && refLink.GetMouseManager().getMouseY()<=693) //cordonate calculate experimental folosind MousePressed + printuri
+
+            if(refLink.GetMouseManager().getMouseY()>=441 && refLink.GetMouseManager().getMouseY()<=558) //cordonate calculate experimental folosind MousePressed + printuri
             {
                 if(refLink.GetMouseManager().leftClickPressed())
                 {
-                    buttonClick.setFramePosition(0); // un soi de "reincarcare" a sunetului. mai degraba o setare a timeline-ului pe momentul 0
-                    buttonClick.start(); //sunet pentru a dinamiza experienta de parcurgere a meniului
-                    menuMusic.stop();
+                    Assets.buttonClick.setFramePosition(0); // un soi de "reincarcare" a sunetului. mai degraba o setare a timeline-ului pe momentul 0
+                    Assets.buttonClick.start(); //sunet pentru a dinamiza experienta de parcurgere a meniului
+                    Assets.menuMusic.stop();
                     State.SetState(refLink.GetGame().getPlayState());
+                    Thread.sleep(500);
                 }
             }
+
+            if(refLink.GetMouseManager().getMouseY()>=577 && refLink.GetMouseManager().getMouseY()<=692) //cordonate calculate experimental folosind MousePressed + printuri
+            {
+                if(refLink.GetMouseManager().leftClickPressed())
+                {
+                    Assets.buttonClick.setFramePosition(0); // un soi de "reincarcare" a sunetului. mai degraba o setare a timeline-ului pe momentul 0
+                    Assets.buttonClick.start(); //sunet pentru a dinamiza experienta de parcurgere a meniului
+                    loadButtonClicked=true;
+                    Assets.menuMusic.stop();
+                    State.SetState(refLink.GetGame().getPlayState());
+                    Thread.sleep(500);
+                }
+            }
+
 
             if(refLink.GetMouseManager().getMouseY()>=709 && refLink.GetMouseManager().getMouseY()<=823) //cordonate calculate experimental folosind MousePressed + printuri
             {
                 //asta o sa fie settings state.
                 if(refLink.GetMouseManager().leftClickPressed())
                 {
-                    buttonClick.setFramePosition(0); // un soi de "reincarcare" a sunetului. mai degraba o setare a timeline-ului pe momentul 0
-                    buttonClick.start(); //sunet pentru a dinamiza experienta de parcurgere a meniului
+                    Assets.buttonClick.setFramePosition(0); // un soi de "reincarcare" a sunetului. mai degraba o setare a timeline-ului pe momentul 0
+                    Assets.buttonClick.start(); //sunet pentru a dinamiza experienta de parcurgere a meniului
                     State.SetState(refLink.GetGame().getSettingsState());
                 }
 
@@ -78,8 +85,8 @@ public class MenuState extends State
             {
                 if(refLink.GetMouseManager().leftClickPressed())
                 {
-                    buttonClick.setFramePosition(0); // un soi de "reincarcare" a sunetului. mai degraba o setare a timeline-ului pe momentul 0
-                    buttonClick.start(); //sunet pentru a dinamiza experienta de parcurgere a meniului
+                    Assets.buttonClick.setFramePosition(0); // un soi de "reincarcare" a sunetului. mai degraba o setare a timeline-ului pe momentul 0
+                    Assets.buttonClick.start(); //sunet pentru a dinamiza experienta de parcurgere a meniului
                     System.exit(0);
                 }
             }
@@ -91,8 +98,8 @@ public class MenuState extends State
             {
                 if(refLink.GetMouseManager().leftClickPressed())
                 {
-                    buttonClick.setFramePosition(0); // un soi de "reincarcare" a sunetului. mai degraba o setare a timeline-ului pe momentul 0
-                    buttonClick.start(); //sunet pentru a dinamiza experienta de parcurgere a meniului
+                    Assets.buttonClick.setFramePosition(0); // un soi de "reincarcare" a sunetului. mai degraba o setare a timeline-ului pe momentul 0
+                    Assets.buttonClick.start(); //sunet pentru a dinamiza experienta de parcurgere a meniului
                     State.SetState(refLink.GetGame().getAboutState());
                 }
             }
@@ -108,10 +115,14 @@ public class MenuState extends State
     @Override
     public void Draw(Graphics g)
     {
-        g.drawImage(background,0,0,refLink.GetWidth(),refLink.GetHeight(),null);
+        g.drawImage(Assets.background,0,0,refLink.GetWidth(),refLink.GetHeight(),null);
         //folosim aceasta imbricare de if-uri pentru a printa un png de 114x114 pixeli care sa sugereze grafic butonul din meniu pe care
         if(refLink.GetMouseManager().getMouseX()>=495 && refLink.GetMouseManager().getMouseX()<=812)
         {
+            if(refLink.GetMouseManager().getMouseY()>=441 && refLink.GetMouseManager().getMouseY()<=558)
+            {
+                g.drawImage(Assets.hoverElement,832,441,114,114,null);
+            }
             if(refLink.GetMouseManager().getMouseY()>=576 && refLink.GetMouseManager().getMouseY()<=693)
             {
                 g.drawImage(Assets.hoverElement,832,576,114,114,null);
@@ -130,4 +141,16 @@ public class MenuState extends State
             }
         }
     }
+
+    public static boolean getLoadButtonFlag()
+    {
+        return loadButtonClicked;
+    }
+
+    public static void setLoadButtonFlag(boolean flag)
+    {
+        loadButtonClicked=flag;
+    }
+
+
 }

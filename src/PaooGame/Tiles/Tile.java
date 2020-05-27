@@ -11,15 +11,15 @@ public class Tile
     private static final int NO_TILES   = 32;
     public static Tile[] tiles          = new Tile[NO_TILES];       /*!< Vector de referinte de tipuri de dale.*/
 
+    private final static TileFactory tileFactory = new TileFactory();
+
         /// De remarcat ca urmatoarele dale sunt statice si publice. Acest lucru imi permite sa le am incarcate
         /// o singura data in memorie
-    public static Tile grassTile        = new GrassTile(0);     /*!< Dala de tip iarba*/
-    public static Tile rockTile         = new RockTile(1);  /*!< Dala de tip munte/piatra*/
-    public static Tile waterTile        = new WaterTile(2);     /*!< Dala de tip apa*/
-    public static Tile treeTile         = new TreeTrunkTile(3);      /*!< Dala de tip trunchi de copac*/
-    public static Tile treeLeafTile     = new TreeLeafTile(4);      /*!< Dala de tip frunze de copac*/
-    public static Tile soilTile         = new SoilTile(5);      /*!< Dala de tip sol/pamant*/
-    public static Tile lavaTile         = new LavaTile(6);      /*!< Dala de tip lava*/
+    public static Tile grassTile        = tileFactory.createTile(0);
+    public static Tile rockTile         = tileFactory.createTile(1);
+    public static Tile waterTile        = tileFactory.createTile(2);
+    public static Tile soilTile         = tileFactory.createTile(3);
+    public static Tile lavaTile         = tileFactory.createTile(4);
 
 
     public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/

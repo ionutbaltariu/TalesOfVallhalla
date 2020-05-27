@@ -1,6 +1,8 @@
 package PaooGame.States;
 
 import java.awt.*;
+import java.sql.SQLException;
+
 import PaooGame.RefLinks;
 
 /*! \class State
@@ -43,7 +45,7 @@ public abstract class State
     }
 
         ///Metoda abstracta destinata actualizarii starii curente
-    public abstract void Update() throws InterruptedException;
+    public abstract void Update() throws InterruptedException, SQLException;
         ///Metoda abstracta destinata desenarii starii curente
-    public abstract void Draw(Graphics g);
+    public abstract void Draw(Graphics g) throws SQLException;
 }

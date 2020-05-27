@@ -1,8 +1,6 @@
 package PaooGame.Graphics;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import java.io.IOException;
 
 /*! \class AudioLoader
@@ -38,5 +36,13 @@ public class AudioLoader {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void setVolume(Clip song, int volume)
+    {
+        FloatControl control = (FloatControl) song.getControl(FloatControl.Type.MASTER_GAIN);
+        float range = control.getMinimum();
+        float result = range * (1 - volume / 100.0f);
+        control.setValue(result);
     }
 }
