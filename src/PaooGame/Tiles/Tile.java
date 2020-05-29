@@ -20,6 +20,14 @@ public class Tile
     public static Tile waterTile        = tileFactory.createTile(2);
     public static Tile soilTile         = tileFactory.createTile(3);
     public static Tile lavaTile         = tileFactory.createTile(4);
+    public static Tile magmaTile        = tileFactory.createTile(5);
+    public static Tile snowTile         = tileFactory.createTile(6);
+    public static Tile iceTile          = tileFactory.createTile(9);
+    public static Tile houseWallTile    = tileFactory.createTile(7);
+    public static Tile houseRoofTile    = tileFactory.createTile(8);
+    public static Tile houseWindowTile  = tileFactory.createTile(12);
+    public static Tile houseDoorTile    = tileFactory.createTile(10);
+    public static Tile coinTile         = tileFactory.createTile(11);
 
 
     public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/

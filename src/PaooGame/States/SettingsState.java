@@ -29,7 +29,7 @@ public class SettingsState extends State
      */
     @Override
     public void Update() throws SQLException, InterruptedException {
-        if(refLink.GetMouseManager().getMouseY()>=851 && refLink.GetMouseManager().getMouseY()<=968)
+        if(refLink.GetMouseManager().getMouseY()>=851 && refLink.GetMouseManager().getMouseY()<=908)
         {
             if(refLink.GetMouseManager().getMouseX()>=146 && refLink.GetMouseManager().getMouseX()<=465)
             {

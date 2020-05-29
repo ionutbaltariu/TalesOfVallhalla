@@ -10,6 +10,7 @@ import PaooGame.Tiles.Tile;
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -19,9 +20,9 @@ import java.sql.SQLException;
                 ------------
                 |           |
                 |     ------------
-    60 times/s  |     |  Update  |  -->{ actualizeaza variabile, stari, pozitii ale elementelor grafice etc.
+    00 times/s  |     |  Update  |  -->{ actualizeaza variabile, stari, pozitii ale elementelor grafice etc.
         =       |     ------------
-     16.7 ms    |           |
+     10.7 ms    |           |
                 |     ------------
                 |     |   Draw   |  -->{ deseneaza totul pe ecran
                 |     ------------
@@ -165,7 +166,7 @@ public class Game implements Runnable
                 /// Actualizeaza pozitiile elementelor
                 try {
                     Update();
-                } catch (InterruptedException | SQLException e) {
+                } catch (InterruptedException | SQLException | FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 /// Deseneaza elementele grafica in fereastra.
@@ -230,7 +231,7 @@ public class Game implements Runnable
 
         Metoda este declarata privat deoarece trebuie apelata doar in metoda run()
      */
-    private void Update() throws InterruptedException, SQLException {
+    private void Update() throws InterruptedException, SQLException, FileNotFoundException {
             ///Determina starea tastelor
         keyManager.Update();
         ///Trebuie obtinuta starea curenta pentru care urmeaza a se actualiza starea, atentie trebuie sa fie diferita de null.

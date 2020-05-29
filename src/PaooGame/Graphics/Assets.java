@@ -6,6 +6,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.BufferOverflowException;
 
 /*! \class Assets
     \brief Clasa incarca fiecare element grafic necesar jocului.
@@ -36,6 +37,15 @@ public class Assets
     public static BufferedImage water;
     public static BufferedImage rock;
     public static BufferedImage lava;
+    public static BufferedImage magma;
+    public static BufferedImage snow;
+    public static BufferedImage coin;
+    public static BufferedImage ice;
+
+    public static BufferedImage houseWall;
+    public static BufferedImage houseDoor;
+    public static BufferedImage houseRoof;
+    public static BufferedImage houseWindow;
 
     public static BufferedImage background;    /*!< Background-ul efectiv al meniului(facut in Photoshop).*/
     public static BufferedImage suspend;       /*!< Obiect de tip "BufferedImage" in care incarcam popup-ul care apare cand apasam ESC.*/
@@ -68,6 +78,7 @@ public class Assets
         SpriteSheet tileSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/spritesheet.png"),32,32);
         SpriteSheet enemy1 = new SpriteSheet(ImageLoader.LoadImage("/textures/enemy1.png"),50,48);
         SpriteSheet enemy2 = new SpriteSheet(ImageLoader.LoadImage("/textures/enemy2.png"),96,96);
+        SpriteSheet house  = new SpriteSheet(ImageLoader.LoadImage("/textures/houseSprite.png"),32,32);
 
         background=ImageLoader.LoadImage("/menu.jpg");
         suspend=ImageLoader.LoadImage("/suspend.png");
@@ -77,6 +88,7 @@ public class Assets
         hpBackground = ImageLoader.LoadImage("/healthbarBackground.png");
         hpForeground = ImageLoader.LoadImage("/healthbarForeground.png");
         hpBorder     = ImageLoader.LoadImage("/healthbarBorder.png");
+
         menuBackgroundMusic      = AudioLoader.LoadAudio("/menuStateMusic.wav");
         buttonClickSound         = AudioLoader.LoadAudio("/menuSelect.wav");
         playStateBackgroundMusic = AudioLoader.LoadAudio("/playStateMusic.wav");
@@ -100,6 +112,15 @@ public class Assets
         water      = tileSheet.crop(4, 0);
         soil       = tileSheet.crop(1,0);
         lava       = tileSheet.crop(2,1);
+        magma      = tileSheet.crop(3,1);
+        snow       = tileSheet.crop(1,3);
+        ice        = tileSheet.crop(1,1);
+        coin       = ImageLoader.LoadImage("/textures/coin.png");
+
+        houseDoor  = house.crop(1,0);
+        houseRoof  = house.crop(0,3);
+        houseWall  = house.crop(0,0);
+        houseWindow= house.crop(2,1);
 
         ///Cropam imaginile necesare pentru caracterul principal.
         heroLeft = characterSheet.crop(0, 3);

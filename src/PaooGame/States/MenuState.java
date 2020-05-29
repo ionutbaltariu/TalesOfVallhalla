@@ -46,9 +46,13 @@ public class MenuState extends State
             {
                 if(refLink.GetMouseManager().leftClickPressed())
                 {
+                    PlayState.wasBoss1Defeated=false;
+                    PlayState.wasBoss2Defeated=false;
                     Assets.buttonClick.setFramePosition(0); // un soi de "reincarcare" a sunetului. mai degraba o setare a timeline-ului pe momentul 0
                     Assets.buttonClick.start(); //sunet pentru a dinamiza experienta de parcurgere a meniului
                     Assets.menuMusic.stop();
+                    PlayState.resetIterator1();
+                    PlayState.resetIterator2();
                     State.SetState(refLink.GetGame().getPlayState());
                     Thread.sleep(500);
                 }
@@ -142,11 +146,20 @@ public class MenuState extends State
         }
     }
 
+    /*! \fn public static boolean getLoadButtonFlag()
+        \brief Functie statica ce indica valoarea flagului care tine cont daca a fost apasat butonul de Load.
+               Statica si publica pentru a putea fi accesata din PlayState pentru a incarca efectiv datele din baza de date.
+     */
     public static boolean getLoadButtonFlag()
     {
         return loadButtonClicked;
     }
 
+    /*! \fn public static void setLoadButtonFlag(boolean flag)
+        \brief Functie statica ce modifica valoarea flagului care tine cont daca a fost apasat butonul de Load.
+               Statica si publica pentru a putea fi accesata din PlayState ca sa fie resetat flagul.
+        \param flag boolean ce reprezinta valoarea flagului ce tine cont de apasarea pe butonul de "Load"
+     */
     public static void setLoadButtonFlag(boolean flag)
     {
         loadButtonClicked=flag;

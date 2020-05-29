@@ -17,9 +17,6 @@ import java.awt.image.BufferedImage;
 public class Enemy  extends Character{
 
     BufferedImage image;
-    boolean flag=false;
-    long now;
-    long then;
     int type;
 
     /*! \fn public Enemy(RefLinks refLink, float x, float y, int width, int height, float speed, int life, int type)
@@ -103,21 +100,6 @@ public class Enemy  extends Character{
     /*! \fn private boolean secondElapsed()
         \brief Functie care contorizeaza trecerea unei secunde.
      */
-    private boolean secondElapsed()
-    {
-        if(!flag)
-        {
-            then= System.nanoTime();
-            flag=true;
-        }
-        now=System.nanoTime();
-        if(now-then>=1000000000)
-        {
-            flag=false;
-            return true;
-        }
-        return false;
-    }
 
     /*! \fn private void giveDamage(Hero hero)
         \brief Functie care scade din viata eroului ca urmare a contactului intre acesta si monstru.
@@ -127,7 +109,7 @@ public class Enemy  extends Character{
     private void giveDamage(Hero hero)
     {
         if(hero.GetActualLife()>0)
-            hero.SetActualLife(hero.GetActualLife()-1);
+            hero.SetActualLife(hero.GetActualLife()-2);
     }
 
     /*! \fn private void followHero(Hero hero)
@@ -196,7 +178,7 @@ public class Enemy  extends Character{
                 //coltului stang al eroului este intre limitarile de atac ale monstrului pe axa x
                 if (hero.GetY() + hero.attackBounds.y > y + attackBounds.y && hero.GetY() + attackBounds.y < y + this.attackBounds.height) { // testam daca Y-ul
                     //coltului stang al eroului este intre limitarile de atac ale monstrului pe axa y
-                    if (secondElapsed()) // daca trece o secunda de suprapunere a coltului stang al eroului cu aria monstrului
+                    if (Character.secondElapsed()) // daca trece o secunda de suprapunere a coltului stang al eroului cu aria monstrului
                     {
                         giveDamage(hero); // eroul pierde viata
                     }
@@ -212,7 +194,7 @@ public class Enemy  extends Character{
                 }
                 //aceeasi descriere pentru colt stanga jos
                 if (hero.GetY() + hero.attackBounds.height > y + attackBounds.y && hero.GetY() + attackBounds.height < y + this.attackBounds.height) {
-                    if (secondElapsed()) {
+                    if (Character.secondElapsed()) {
                         giveDamage(hero);
                     }
                     if (refLink.GetKeyManager().space) {
@@ -227,7 +209,7 @@ public class Enemy  extends Character{
             //colt dreapta sus
             if (hero.GetX() + hero.attackBounds.width > x + attackBounds.x && hero.GetX() + attackBounds.width < x + this.attackBounds.width) {
                 if (hero.GetY() + hero.attackBounds.y > y + attackBounds.y && hero.GetY() + attackBounds.y < y + this.attackBounds.height) {
-                    if (secondElapsed()) {
+                    if (Character.secondElapsed()) {
                         giveDamage(hero);
                     }
                     if (refLink.GetKeyManager().space) {
@@ -240,7 +222,7 @@ public class Enemy  extends Character{
                 }
                 //colt dreapta jos
                 if (hero.GetY() + hero.attackBounds.height > y + attackBounds.y && hero.GetY() + attackBounds.height < y + this.attackBounds.height) {
-                    if (secondElapsed()) {
+                    if (Character.secondElapsed()) {
                         giveDamage(hero);
                     }
                     if (refLink.GetKeyManager().space) {

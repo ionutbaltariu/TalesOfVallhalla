@@ -1,6 +1,7 @@
 package PaooGame.States;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
 import PaooGame.RefLinks;
@@ -45,7 +46,7 @@ public abstract class State
     }
 
         ///Metoda abstracta destinata actualizarii starii curente
-    public abstract void Update() throws InterruptedException, SQLException;
+    public abstract void Update() throws InterruptedException, SQLException, FileNotFoundException;
         ///Metoda abstracta destinata desenarii starii curente
     public abstract void Draw(Graphics g) throws SQLException;
 }
