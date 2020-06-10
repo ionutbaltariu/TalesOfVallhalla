@@ -10,8 +10,6 @@ import java.sql.SQLException;
 /*! \class MenuState extends State
     \brief Implementeaza notiunea de menu pentru joc.
  */
-
-
 public class MenuState extends State
 {
 
@@ -23,17 +21,23 @@ public class MenuState extends State
         \param refLink O referinta catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
      */
 
-    public MenuState(RefLinks refLink) throws SQLException {
+    public MenuState(RefLinks refLink) {
             ///Apel al constructorului clasei de baza.
         super(refLink);
-        AudioLoader.setVolume(Assets.menuMusic,refLink.GetDatabase().getMenuVolume());
+        try {
+            AudioLoader.setVolume(Assets.menuMusic, refLink.GetDatabase().getMenuVolume());
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Eroare MenuState->Constructor");
+        }
 
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
      */
     @Override
-    public void Update() throws InterruptedException {
+    public void Update(){
         if(!Assets.menuMusic.isRunning()) { // daca Clipul audio nu este deja pornit
             Assets.menuMusic.setFramePosition(0);  // il setam sa inceapa de la frameul 0 ( folositor cand revenim in meniu din playState )
             Assets.menuMusic.start(); // pornim clipul audio
@@ -46,15 +50,18 @@ public class MenuState extends State
             {
                 if(refLink.GetMouseManager().leftClickPressed())
                 {
-                    PlayState.wasBoss1Defeated=false;
-                    PlayState.wasBoss2Defeated=false;
                     Assets.buttonClick.setFramePosition(0); // un soi de "reincarcare" a sunetului. mai degraba o setare a timeline-ului pe momentul 0
                     Assets.buttonClick.start(); //sunet pentru a dinamiza experienta de parcurgere a meniului
                     Assets.menuMusic.stop();
-                    PlayState.resetIterator1();
-                    PlayState.resetIterator2();
+                    refLink.SetMap(PlayState.map);
                     State.SetState(refLink.GetGame().getPlayState());
-                    Thread.sleep(500);
+                    try {
+                        Thread.sleep(500);
+                    }
+                    catch (InterruptedException e)
+                    {
+                        System.err.println("Eroare la thread in update.");
+                    }
                 }
             }
 
@@ -66,8 +73,31 @@ public class MenuState extends State
                     Assets.buttonClick.start(); //sunet pentru a dinamiza experienta de parcurgere a meniului
                     loadButtonClicked=true;
                     Assets.menuMusic.stop();
-                    State.SetState(refLink.GetGame().getPlayState());
-                    Thread.sleep(500);
+                    try {
+                        if (refLink.GetDatabase().getIsInLvl1() == 1) {
+                            State.SetState(refLink.GetGame().getLevel1State());
+                            refLink.SetMap(Level1State.level1);
+                            Thread.sleep(500);
+                        }
+                        if (refLink.GetDatabase().getIsInLvl2() == 1) {
+                            State.SetState(refLink.GetGame().getLevel2State());
+                            refLink.SetMap(Level2State.level2);
+                            Thread.sleep(500);
+                        }
+                        if (refLink.GetDatabase().getIsInStart() == 1) {
+                            State.SetState(refLink.GetGame().getPlayState());
+                            refLink.SetMap(PlayState.map);
+                            Thread.sleep(500);
+                        }
+                    }
+                    catch (SQLException e )
+                    {
+                        System.err.println("Eroare in MenuState->Update->Baza de date.");
+                    }
+                    catch (InterruptedException e)
+                    {
+                        System.err.println("Eroare in MenuState->Update->Thread.");
+                    }
                 }
             }
 
@@ -164,6 +194,5 @@ public class MenuState extends State
     {
         loadButtonClicked=flag;
     }
-
 
 }

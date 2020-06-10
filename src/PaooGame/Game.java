@@ -5,12 +5,10 @@ import PaooGame.Graphics.Assets;
 import PaooGame.Input.KeyManager;
 import PaooGame.Input.MouseManager;
 import PaooGame.States.*;
-import PaooGame.Tiles.Tile;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -49,7 +47,7 @@ import java.sql.SQLException;
  */
 public class Game implements Runnable
 {
-    private GameWindow      Window;        /*!< Fereastra in care se va desena tabla jocului*/
+    private final GameWindow      Window;        /*!< Fereastra in care se va desena tabla jocului*/
     private boolean         runState;   /*!< Flag ce starea firului de executie.*/
     private Thread          gameThread; /*!< Referinta catre thread-ul de update si draw al ferestrei*/
     private BufferStrategy  bs;         /*!< Referinta catre un mecanism cu care se organizeaza memoria complexa pentru un canvas.*/
@@ -73,12 +71,15 @@ public class Game implements Runnable
     private State menuState;            /*!< Referinta catre menu.*/
     private State settingsState;        /*!< Referinta catre setari.*/
     private State aboutState;           /*!< Referinta catre about.*/
+    private State pauseState;           /*!< Referinta catre pause State.*/
+    private State level1State;          /*!< Referinta catre state-ul nivelului 1.*/
+    private State level2State;          /*!< Referinta catre state-ul nivelului 2.*/
+    private State endState;             /*!< Referinta catre state-ul de final*/
 
     private final KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile de la tastatura din partea utilizatorului.*/
     private final MouseManager mouseManager;  /*!< Referinta catre obiectul care gestioneaza intrarile mouse din partea utilizatorului.*/
-    private RefLinks refLink;           /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
+    private RefLinks refLink;                 /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
 
-    private Tile tile;                  /*!< variabila membra temporara. Este folosita in aceasta etapa doar pentru a desena ceva pe ecran.*/
 
     /*! \fn public Game(String title, int width, int height)
         \brief Constructor de initializare al clasei Game.
@@ -110,7 +111,7 @@ public class Game implements Runnable
         Sunt construite elementele grafice (assets): dale, player, elemente active si pasive.
 
      */
-    private void InitGame() throws IOException, LineUnavailableException, SQLException {
+    private void InitGame(){
             /// Este construita fereastra grafica.
         Window.BuildGameWindow();
             ///Sa ataseaza ferestrei managerul de tastatura pentru a primi evenimentele furnizate de fereastra.
@@ -128,6 +129,10 @@ public class Game implements Runnable
         menuState       = new MenuState(refLink);
         settingsState   = new SettingsState(refLink);
         aboutState      = new AboutState(refLink);
+        pauseState      = new PauseState(refLink);
+        level1State     = new Level1State(refLink);
+        level2State     = new Level2State(refLink);
+        endState        = new EndState(refLink);
         ///Seteaza starea implicita cu care va fi lansat programul in executie
         State.SetState(menuState);
     }
@@ -141,11 +146,8 @@ public class Game implements Runnable
     {
 
             /// Initializeaza obiectul game
-        try {
-            InitGame();
-        } catch (IOException | LineUnavailableException | SQLException e) {
-            e.printStackTrace();
-        }
+        InitGame();
+
         long oldTime = System.nanoTime();   /*!< Retine timpul in nanosecunde aferent frame-ului anterior.*/
         long curentTime;                    /*!< Retine timpul curent de executie.*/
 
@@ -164,24 +166,16 @@ public class Game implements Runnable
             if((curentTime - oldTime) > timeFrame)
             {
                 /// Actualizeaza pozitiile elementelor
-                try {
-                    Update();
-                } catch (InterruptedException | SQLException | FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                Update();
                 /// Deseneaza elementele grafica in fereastra.
-                try {
-                    Draw();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
+                Draw();
                 oldTime = curentTime;
             }
         }
 
     }
 
-    /*! \fn public synchronized void start()
+    /*! \fn public synchronized void StartGame()
         \brief Creaza si starteaza firul separat de executie (thread).
 
         Metoda trebuie sa fie declarata synchronized pentru ca apelul acesteia sa fie semaforizat.
@@ -199,39 +193,12 @@ public class Game implements Runnable
             gameThread.start();
         }
     }
-
-    /*! \fn public synchronized void stop()
-        \brief Opreste executie thread-ului.
-
-        Metoda trebuie sa fie declarata synchronized pentru ca apelul acesteia sa fie semaforizat.
-     */
-    public synchronized void StopGame()
-    {
-        if(runState)
-        {
-                /// Actualizare stare thread
-            runState = false;
-                /// Metoda join() arunca exceptii motiv pentru care trebuie incadrata intr-un block try - catch.
-            try
-            {
-                    /// Metoda join() pune un thread in asteptare panca cand un altul isi termina executie.
-                    /// Totusi, in situatia de fata efectul apelului este de oprire a threadului.
-                gameThread.join();
-            }
-            catch(InterruptedException ex)
-            {
-                    /// In situatia in care apare o exceptie pe ecran vor fi afisate informatii utile pentru depanare.
-                ex.printStackTrace();
-            }
-        }
-    }
-
     /*! \fn private void Update()
         \brief Actualizeaza starea elementelor din joc.
 
         Metoda este declarata privat deoarece trebuie apelata doar in metoda run()
      */
-    private void Update() throws InterruptedException, SQLException, FileNotFoundException {
+    private void Update(){
             ///Determina starea tastelor
         keyManager.Update();
         ///Trebuie obtinuta starea curenta pentru care urmeaza a se actualiza starea, atentie trebuie sa fie diferita de null.
@@ -253,7 +220,7 @@ public class Game implements Runnable
 
         Metoda este declarata privat deoarece trebuie apelata doar in metoda run()
      */
-    private void Draw() throws SQLException {
+    private void Draw() {
             /// Returnez bufferStrategy pentru canvasul existent
         bs = Window.GetCanvas().getBufferStrategy();
             /// Verific daca buffer strategy a fost construit sau nu
@@ -341,16 +308,40 @@ public class Game implements Runnable
           \brief Returneaza aboutState pentru a fi putea folosit in alte clase.
                  Util atunci cand schimbam state-ul in menuState.
        */
+
     public State getAboutState() { return aboutState; }
     /*! \fn public State getSettingsState()
           \brief Returneaza setttingsState pentru a fi putea folosit in alte clase.
                  Util atunci cand schimbam state-ul in settingsState.
        */
+
     public State getSettingsState() { return settingsState; }
-    /*! \fn public GameWindow getWindow()
-          \brief Returneaza un obiect de tip GameWindow.
-       */
-    public GameWindow getWindow() { return Window; }
+
+    /*! \fn public State getPauseState()
+      \brief Returneaza pause State pentru a fi putea folosit in alte clase.
+             Util atunci cand schimbam state-ul in settingsState.
+   */
+
+    public State getPauseState() { return pauseState; }
+
+    /*! \fn public State getLevel1State()
+  \brief Returneaza level 1 State pentru a fi putea folosit in alte clase.
+    */
+
+    public State getLevel1State() { return level1State; }
+
+    /*! \fn public State getLevel2State()
+    \brief Returneaza level 2 State pentru a fi putea folosit in alte clase.
+    */
+
+    public State getLevel2State() { return level2State; }
+
+    /*! \fn public State getEndState()
+    \brief Returneaza state-ul final pentru a fi putea folosit in alte clase.
+           Util cand se termina jocul.
+    */
+
+    public State getEndState() { return endState; }
 
     /*! \fn public DBHandler getDatabase()
         \brief Returneaza DBHandler-ul pe care-l folosim pentru a incarca/schimba setari sau salvari.

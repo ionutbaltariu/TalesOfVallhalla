@@ -2,8 +2,11 @@ package PaooGame.Tiles;
 
 import PaooGame.Graphics.Assets;
 
+/*! \class HouseRoofTile extends Tile
+    \brief Abstractizeaza notiunea de dala de tip acoperis.
+ */
 public class HouseRoofTile extends Tile{
-    /*! \fn public LavaTile(int id)
+    /*! \fn public HouseRoofTile(int id)
 \brief Constructorul de initializare al clasei
 
 \param id Id-ul dalei util in desenarea hartii.

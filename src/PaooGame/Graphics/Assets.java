@@ -6,7 +6,6 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.BufferOverflowException;
 
 /*! \class Assets
     \brief Clasa incarca fiecare element grafic necesar jocului.
@@ -15,56 +14,59 @@ import java.nio.BufferOverflowException;
  */
 public class Assets
 {
-    public static BufferedImage hoverElement;
-        /// Referinte catre elementele grafice (dale) utilizate in joc.
-    public static BufferedImage heroLeft;
-    public static BufferedImage heroRight;
-    public static BufferedImage heroUp;
-    public static BufferedImage heroDown;
+    static boolean flag=false;
+    static long now;
+    static long then;
 
-    public static BufferedImage enemy1Left;
-    public static BufferedImage enemy1Right;
-    public static BufferedImage enemy1Up;
-    public static BufferedImage enemy1Down;
+    public static BufferedImage hoverElement;        /*!< Imagine care va aparea cand tinem mouse-ul peste un buton.*/
+    public static BufferedImage heroLeft;            /*!< Imagine pentru mersul in stanga al eroului*/
+    public static BufferedImage heroRight;           /*!< Imagine pentru mersul in dreapta al eroului*/
+    public static BufferedImage heroUp;              /*!< Imagine pentru mersul in sus al eroului*/
+    public static BufferedImage heroDown;            /*!< Imagine pentru mersul in jos al eroului*/
 
-    public static BufferedImage enemy2Left;
-    public static BufferedImage enemy2Right;
-    public static BufferedImage enemy2Up;
-    public static BufferedImage enemy2Down;
+    public static BufferedImage enemy1Left;          /*!< Imagine pentru mersul in stanga al inamicului 1*/
+    public static BufferedImage enemy1Right;         /*!< Imagine pentru mersul in dreapta al inamicului 1*/
+    public static BufferedImage enemy1Up;            /*!< Imagine pentru mersul in sus al inamicului 1*/
+    public static BufferedImage enemy1Down;          /*!< Imagine pentru mersul in jos al inamicului 1*/
 
-    public static BufferedImage soil;
-    public static BufferedImage grass;
-    public static BufferedImage water;
-    public static BufferedImage rock;
-    public static BufferedImage lava;
-    public static BufferedImage magma;
-    public static BufferedImage snow;
-    public static BufferedImage coin;
-    public static BufferedImage ice;
+    public static BufferedImage enemy2Left;          /*!< Imagine pentru mersul in stanga al inamicului 2*/
+    public static BufferedImage enemy2Right;         /*!< Imagine pentru mersul in dreapta al inamicului 2*/
+    public static BufferedImage enemy2Up;            /*!< Imagine pentru mersul in sus al inamicului 2*/
+    public static BufferedImage enemy2Down;          /*!< Imagine pentru mersul in jos al inamicului 2*/
 
-    public static BufferedImage houseWall;
-    public static BufferedImage houseDoor;
-    public static BufferedImage houseRoof;
-    public static BufferedImage houseWindow;
+    public static BufferedImage soil;                /*!< Dala de tip pamant.*/
+    public static BufferedImage grass;               /*!< Dala de tip iarba .*/
+    public static BufferedImage water;               /*!< Dala de tip apa.*/
+    public static BufferedImage rock;                /*!< Dala de tip piatra.*/
+    public static BufferedImage lava;                /*!< Dala de tip lava.*/
+    public static BufferedImage magma;               /*!< Dala de tip magma.*/
+    public static BufferedImage coin;                /*!< Dala de tip banut.*/
 
-    public static BufferedImage background;    /*!< Background-ul efectiv al meniului(facut in Photoshop).*/
-    public static BufferedImage suspend;       /*!< Obiect de tip "BufferedImage" in care incarcam popup-ul care apare cand apasam ESC.*/
-    public static BufferedImage deadState;     /*!< Obiect de tip "BufferedImage" in care incarcam popup-ul care apare cand moare eroul.*/
-    public static BufferedImage settingsBackground;
-    public static BufferedImage aboutBackground; /*!< Background-ul efectiv din abouState.*/
-    public static BufferedImage hpBackground;
-    public static BufferedImage hpForeground;
-    public static BufferedImage hpBorder;
+    public static BufferedImage houseWall;           /*!< Background-ul efectiv din abouState.*/
+    public static BufferedImage houseDoor;           /*!< Background-ul efectiv din abouState.*/
+    public static BufferedImage houseRoof;           /*!< Background-ul efectiv din abouState.*/
+    public static BufferedImage houseWindow;         /*!< Background-ul efectiv din abouState.*/
 
-    public static AudioInputStream menuBackgroundMusic;
-    public static AudioInputStream playStateBackgroundMusic;
-    public static AudioInputStream buttonClickSound;
-    public static AudioInputStream deathSound;
+    public static BufferedImage wallpaper;
+    public static BufferedImage background;          /*!< Background-ul efectiv al meniului(facut in Photoshop).*/
+    public static BufferedImage suspend;             /*!< Obiect de tip "BufferedImage" in care incarcam popup-ul care apare cand apasam ESC.*/
+    public static BufferedImage deadState;           /*!< Obiect de tip "BufferedImage" in care incarcam popup-ul care apare cand moare eroul.*/
+    public static BufferedImage settingsBackground;  /*!< Background-ul efectiv din abouState.*/
+    public static BufferedImage aboutBackground;     /*!< Background-ul efectiv din abouState.*/
+    public static BufferedImage hpBackground;        /*!< Background-ul efectiv din abouState.*/
+    public static BufferedImage hpForeground;        /*!< Background-ul efectiv din abouState.*/
+    public static BufferedImage hpBorder;            /*!< Background-ul efectiv din abouState.*/
+    public static BufferedImage endStateBackground;  /*!< Background-ul efectiv din abouState.*/
 
-    public static Clip music;                  /*!< Obiect de tip "Clip" in care putem incarca un element audio. In acest caz este muzica din PlayState.*/
-    public static Clip death;                  /*!< Obiect de tip "Clip" in care putem incarca un element audio. In acest caz este sunetul din momentul mortii.*/
-    public static Clip menuMusic;           /*!< Melodia care se aude in menuState.*/
-    public static Clip buttonClick;         /*!< Sunetul care se aude cand apasam un buton din meniu.*/
+    public static AudioInputStream menuBackgroundMusic;         /*!< Background-ul efectiv din abouState.*/
+    public static AudioInputStream playStateBackgroundMusic;    /*!< Background-ul efectiv din abouState.*/
+    public static AudioInputStream buttonClickSound;            /*!< Background-ul efectiv din abouState.*/
+    public static AudioInputStream deathSound;                  /*!< Background-ul efectiv din abouState.*/
+
+    public static Clip music;                                   /*!< Obiect de tip "Clip" in care putem incarca un element audio. In acest caz este muzica din PlayState.*/
+    public static Clip death;                                   /*!< Obiect de tip "Clip" in care putem incarca un element audio. In acest caz este sunetul din momentul mortii.*/
+    public static Clip menuMusic;                               /*!< Melodia care se aude in menuState.*/
+    public static Clip buttonClick;                             /*!< Sunetul care se aude cand apasam un buton din meniu.*/
 
     /*! \fn public static void Init()
         \brief Functia initializaza referintele catre elementele grafice utilizate.
@@ -72,7 +74,7 @@ public class Assets
         Aceasta functie poate fi rescrisa astfel incat elementele grafice incarcate/utilizate
         sa fie parametrizate. Din acest motiv referintele nu sunt finale.
      */
-    public static void Init() throws LineUnavailableException, IOException {
+    public static void Init(){
             /// Se creaza temporar un obiect SpriteSheet initializat prin intermediul clasei ImageLoader
         SpriteSheet characterSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/hero.png"),24,32);
         SpriteSheet tileSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/spritesheet.png"),32,32);
@@ -84,37 +86,43 @@ public class Assets
         suspend=ImageLoader.LoadImage("/suspend.png");
         deadState=ImageLoader.LoadImage("/deadState.png");
         settingsBackground=ImageLoader.LoadImage("/settings.png");
-        aboutBackground=ImageLoader.LoadImage("/about.jpg");
+        aboutBackground=ImageLoader.LoadImage("/aboutState.png");
+        wallpaper=ImageLoader.LoadImage("/wallpaper.jpg");
         hpBackground = ImageLoader.LoadImage("/healthbarBackground.png");
         hpForeground = ImageLoader.LoadImage("/healthbarForeground.png");
         hpBorder     = ImageLoader.LoadImage("/healthbarBorder.png");
+        endStateBackground = ImageLoader.LoadImage("/endState.jpg");
 
         menuBackgroundMusic      = AudioLoader.LoadAudio("/menuStateMusic.wav");
         buttonClickSound         = AudioLoader.LoadAudio("/menuSelect.wav");
         playStateBackgroundMusic = AudioLoader.LoadAudio("/playStateMusic.wav");
         deathSound               = AudioLoader.LoadAudio("/deadSound.wav");
 
-        music= AudioSystem.getClip();
-        music.open(playStateBackgroundMusic);
-        death = AudioSystem.getClip();
-        death.open(deathSound);
-        menuMusic=AudioSystem.getClip();
-        menuMusic.open(menuBackgroundMusic);
-        buttonClick=AudioSystem.getClip();
-        buttonClick.open(buttonClickSound);
+        try {
+            music = AudioSystem.getClip();
+            music.open(playStateBackgroundMusic);
+            death = AudioSystem.getClip();
+            death.open(deathSound);
+            menuMusic = AudioSystem.getClip();
+            menuMusic.open(menuBackgroundMusic);
+            buttonClick = AudioSystem.getClip();
+            buttonClick.open(buttonClickSound);
+        }
+        catch (LineUnavailableException | IOException e)
+        {
+            System.err.println("Eroare la incarcarea sunetelor in Assets.");
+        }
 
         hoverElement=ImageLoader.LoadImage("/optionHover.png");
 
         /// Se obtin subimaginile corespunzatoare elementelor necesare.
         /// Cropam imaginile necesare pentru dalele folosite in crearea hartii.
-        grass      = tileSheet.crop(2, 3);
+        grass      = tileSheet.crop(0, 0);
         rock       = tileSheet.crop(2, 0);
         water      = tileSheet.crop(4, 0);
         soil       = tileSheet.crop(1,0);
         lava       = tileSheet.crop(2,1);
         magma      = tileSheet.crop(3,1);
-        snow       = tileSheet.crop(1,3);
-        ice        = tileSheet.crop(1,1);
         coin       = ImageLoader.LoadImage("/textures/coin.png");
 
         houseDoor  = house.crop(1,0);
@@ -140,5 +148,24 @@ public class Assets
         enemy2Up    = enemy2.crop(0,3);
         enemy2Down  = enemy2.crop(0,0);
 
+    }
+
+    /*! \fn public static boolean secondElapsed()
+        \brief Functie ce contorizeaza trecerea unei secunde.
+    */
+    public static boolean secondElapsed()
+    {
+        if(!flag)
+        {
+            then= System.nanoTime();
+            flag=true;
+        }
+        now=System.nanoTime();
+        if(now-then>=1000000000)
+        {
+            flag=false;
+            return true;
+        }
+        return false;
     }
 }

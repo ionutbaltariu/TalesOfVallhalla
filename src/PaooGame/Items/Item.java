@@ -14,17 +14,17 @@ public abstract class Item
         ///ce pot sa apara in urma calculelor, urmand a se converti la intreg doar in momentul desenarii.
     protected float x;                  /*!< Pozitia pe axa X a "tablei" de joc a imaginii entitatii.*/
     protected float y;                  /*!< Pozitia pe axa Y a "tablei" de joc a imaginii entitatii.*/
-    protected int width;                /*!< Latimea imaginii entitatii.*/
-    protected int height;               /*!< Inaltimea imaginii entitatii.*/
-    protected Rectangle bounds;         /*!< Dreptunghiul curent de coliziune.*/
-    protected Rectangle normalBounds;   /*!< Dreptunghiul de coliziune aferent starii obisnuite(spatiul ocupat de entitate in mod normal), poate fi mai mic sau mai mare decat dimensiunea imaginii sale.*/
-    protected Rectangle attackBounds;   /*!< Dreptunghiul de coliziune aferent starii de atac.*/
-    protected RefLinks refLink;         /*!< O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.*/
+    protected final int width;                /*!< Latimea imaginii entitatii.*/
+    protected final int height;               /*!< Inaltimea imaginii entitatii.*/
+    protected final Rectangle bounds;         /*!< Dreptunghiul curent de coliziune.*/
+    protected final Rectangle normalBounds;   /*!< Dreptunghiul de coliziune aferent starii obisnuite(spatiul ocupat de entitate in mod normal), poate fi mai mic sau mai mare decat dimensiunea imaginii sale.*/
+    protected final Rectangle attackBounds;   /*!< Dreptunghiul de coliziune aferent starii de atac.*/
+    protected final RefLinks refLink;         /*!< O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.*/
 
     /*! \fn public Item(RefLinks refLink, float x, float y, int width, int height)
         \brief Constructor de initializare al clasei
 
-        \param  reflink Referinte "shortcut" catre alte referinte
+        \param  refLink Referinte "shortcut" catre alte referinte
         \param  x   Pozitia pe axa X a "tablei" de joc a imaginii entitatii.
         \param  y   Pozitia pe axa Y a "tablei" de joc a imaginii entitatii.
         \param  width   Latimea imaginii entitatii.
@@ -99,35 +99,4 @@ public abstract class Item
         this.y = y;
     }
 
-    /*! \fn public float SetWidth()
-        \brief Seteaza latimea imaginii entitatii.
-     */
-    public void SetWidth(int width)
-    {
-        this.width = width;
-    }
-
-    /*! \fn public float SetHeight()
-        \brief Seteaza inaltimea imaginii entitatii.
-     */
-    public void SetHeight(int height)
-    {
-        this.height = height;
-    }
-
-    /*! \fn public void SetNormalMode()
-        \brief Seteaza modul normal de interactiune
-     */
-    public void SetNormalMode()
-    {
-        bounds = normalBounds;
-    }
-
-    /*! \fn public void SetAttackMode()
-        \brief Seteaza modul de atac de interactiune
-     */
-    public void SetAttackMode()
-    {
-        bounds = attackBounds;
-    }
 }

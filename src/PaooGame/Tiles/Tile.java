@@ -9,14 +9,14 @@ import java.awt.image.BufferedImage;
 public class Tile
 {
     private static final int NO_TILES   = 32;
-    public static Tile[] tiles          = new Tile[NO_TILES];       /*!< Vector de referinte de tipuri de dale.*/
+    public static final Tile[] tiles          = new Tile[NO_TILES];       /*!< Vector de referinte de tipuri de dale.*/
 
     private final static TileFactory tileFactory = new TileFactory();
 
         /// De remarcat ca urmatoarele dale sunt statice si publice. Acest lucru imi permite sa le am incarcate
         /// o singura data in memorie
-    public static Tile grassTile        = tileFactory.createTile(0);
-    public static Tile rockTile         = tileFactory.createTile(1);
+    public static final Tile grassTile        = tileFactory.createTile(0);
+    public static final Tile rockTile         = tileFactory.createTile(1);
     public static Tile waterTile        = tileFactory.createTile(2);
     public static Tile soilTile         = tileFactory.createTile(3);
     public static Tile lavaTile         = tileFactory.createTile(4);
@@ -33,7 +33,7 @@ public class Tile
     public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/
     public static final int TILE_HEIGHT = 32;                       /*!< Inaltimea unei dale.*/
 
-    protected BufferedImage img;                                    /*!< Imaginea aferenta tipului de dala.*/
+    protected final BufferedImage img;                                    /*!< Imaginea aferenta tipului de dala.*/
     protected final int id;                                         /*!< Id-ul unic aferent tipului de dala.*/
 
     /*! \fn public Tile(BufferedImage texture, int id)

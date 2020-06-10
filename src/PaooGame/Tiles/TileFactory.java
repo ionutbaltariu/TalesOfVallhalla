@@ -19,10 +19,8 @@ public class TileFactory {
             case 3 -> new SoilTile(3);
             case 4 -> new LavaTile(4);
             case 5 -> new MagmaTile(5);
-            case 6 -> new SnowTile(6);
             case 7 -> new HouseWallTile(7);
             case 8 -> new HouseRoofTile(8);
-            case 9 -> new IceTile(9);
             case 10-> new HouseDoorTile(10);
             case 11-> new CoinTile(11);
             case 12-> new HouseWindowTile(12);

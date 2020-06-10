@@ -1,7 +1,6 @@
 package PaooGame.States;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
 import PaooGame.RefLinks;
@@ -18,7 +17,7 @@ public abstract class State
         ///Urmatoarele atribute sunt statice pentru a evita dealocarea spatiului de memorie la trecerea dintr-o stare in alta.
     private static State previousState  = null; /*!< Referinta catre starea anterioara a jocului.*/
     private static State currentState   = null; /*!< Referinta catre starea curenta a jocului: game, meniu, settings, about etc.*/
-    protected RefLinks refLink;
+    protected final RefLinks refLink;
     public State(RefLinks refLink)
     {
         this.refLink = refLink;
@@ -39,14 +38,21 @@ public abstract class State
             \brief Returneaza starea curenta a jocului.
                    Foarte util cand comutam intre states in meniu.
 
-         */
+    */
     public static State GetState()
     {
         return currentState;
     }
 
+    /*! \fn public static State GetPreviousState()
+            \brief Returneaza starea anterioara a jocului.
+                   Foarte util cand suntem in "PauseState". Pentru a sti din ce State am ajuns acolo.
+
+    */
+    public static State GetPreviousState() { return previousState; }
+
         ///Metoda abstracta destinata actualizarii starii curente
-    public abstract void Update() throws InterruptedException, SQLException, FileNotFoundException;
+    public abstract void Update();
         ///Metoda abstracta destinata desenarii starii curente
-    public abstract void Draw(Graphics g) throws SQLException;
+    public abstract void Draw(Graphics g);
 }

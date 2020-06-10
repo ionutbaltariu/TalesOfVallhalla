@@ -7,7 +7,7 @@ package PaooGame;
 public class Main
 {
     public static void main(String[] args){
-        Game paooGame = new Game("PaooGame", 1280, 1024);
+        Game paooGame = new Game("Tales of Valhalla", 1280, 1024);
         paooGame.StartGame();
     }
 }

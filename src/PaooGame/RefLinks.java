@@ -12,7 +12,7 @@ import PaooGame.Input.KeyManager;
  */
 public class RefLinks
 {
-    private Game game;          /*!< Referinta catre obiectul Game.*/
+    private final Game game;          /*!< Referinta catre obiectul Game.*/
     private Map map;            /*!< Referinta catre harta curenta.*/
 
     /*! \fn public RefLinks(Game game)
@@ -60,16 +60,6 @@ public class RefLinks
     public Game GetGame()
     {
         return game;
-    }
-
-    /*! \fn public void SetGame(Game game)
-        \brief Seteaza referinta catre un obiect Game.
-
-        \param game Referinta obiectului Game.
-     */
-    public void SetGame(Game game)
-    {
-        this.game = game;
     }
 
     /*! \fn public Map GetMap()

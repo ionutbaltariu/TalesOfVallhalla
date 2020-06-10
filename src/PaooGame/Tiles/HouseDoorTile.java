@@ -2,9 +2,12 @@ package PaooGame.Tiles;
 
 import PaooGame.Graphics.Assets;
 
+/*! \class HouseDoorTile extends Tile
+    \brief Abstractizeaza notiunea de dala de tip usa.
+ */
 public class HouseDoorTile extends Tile{
 
-    /*! \fn public LavaTile(int id)
+    /*! \fn public HouseDoorTile(int id)
 \brief Constructorul de initializare al clasei
 
 \param id Id-ul dalei util in desenarea hartii.

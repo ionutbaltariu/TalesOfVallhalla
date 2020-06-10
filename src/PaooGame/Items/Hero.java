@@ -3,9 +3,9 @@ package PaooGame.Items;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import PaooGame.Graphics.ImageLoader;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
+import PaooGame.Tiles.Tile;
 
 /*! \class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
@@ -20,8 +20,9 @@ public class Hero extends Character
 {
     private BufferedImage image;    /*!< Referinta catre imaginea curenta a eroului.*/
     private int score;
-
+    private int hitNumber;
     private static Hero instance = null;
+    public static int DEFAULT_NR_OF_HITS;
 
     /*! \fn public Hero(RefLinks refLink, float x, float y)
         \brief Constructorul de initializare al clasei Hero.
@@ -49,6 +50,15 @@ public class Hero extends Character
         attackBounds.y = 0;
         attackBounds.width = 53;
         attackBounds.height = 58;
+        try
+        {
+            hitNumber = 15 / refLink.GetDatabase().getDifficulty();
+            DEFAULT_NR_OF_HITS=15/refLink.GetDatabase().getDifficulty();
+        }
+        catch (java.sql.SQLException e)
+        {
+            System.err.println("Eroare la baza de date. (getDifficulty)");
+        }
     }
 
     public static Hero getInstance(RefLinks refLink, float x, float y)
@@ -56,10 +66,6 @@ public class Hero extends Character
         if(instance==null)
         {
             instance = new Hero(refLink,x,y);
-        }
-        else
-        {
-            System.out.println("Clasa hero este creata dupa sablonul Singleton.\nExista doar o singura instanta a eroului.");
         }
         return instance;
     }
@@ -71,7 +77,8 @@ public class Hero extends Character
     @Override
     public void Update()
     {
-        if(!isDead()) {
+        System.out.println((int)(this.GetX()/ Tile.TILE_WIDTH+1)+", "+(int)(this.GetY()/Tile.TILE_HEIGHT+1));
+        if(!isDead()) { // cat timp nu e mort eroul, se va updata pozitia lui pe harta.
             ///Verifica daca a fost apasata o tasta
             GetInput();
             ///Actualizeaza pozitia
@@ -132,13 +139,12 @@ public class Hero extends Character
     @Override
     public void Draw(Graphics g)
     {
-        
-            ///doar pentru debug daca se doreste vizualizarea dreptunghiului de coliziune altfel se vor comenta urmatoarele doua linii
+        ///doar pentru debug daca se doreste vizualizarea dreptunghiului de coliziune altfel se vor comenta urmatoarele doua linii
         //g.setColor(Color.blue);
         //g.fillRect((int)(x + bounds.x), (int)(y + bounds.y), bounds.width, bounds.height);
-//        g.setColor(Color.red);
-//        g.fillRect((int)(x + attackBounds.x), (int)(y + attackBounds.y), attackBounds.width, attackBounds.height);
-        if(!this.isDead()) {
+        //g.setColor(Color.red);
+        //g.fillRect((int)(x + attackBounds.x), (int)(y + attackBounds.y), attackBounds.width, attackBounds.height);
+        if(!this.isDead()) { // cat timp nu este mort eroul, va fi desenat.
             g.drawImage(image, (int) x, (int) y, width, height, null);
             g.drawImage(Assets.hpBackground, (int) x, (int) y, attackBounds.width,  attackBounds.y + 8, null);
             g.drawImage(Assets.hpForeground, (int) x, (int) y, (attackBounds.width * actualLife * 10) / (life * 10),  attackBounds.y + 8, null);
@@ -165,5 +171,13 @@ public class Hero extends Character
                Utila cand acesta a savarasit o actiune demna de o recompensa numerica.
      */
     public void SetScore(int score) { this.score=score; }
+    /*! \fn public int getNrOfHits()
+        \brief Getter pentru numarul de hit-uri pe care le are eroul.
+     */
+    public int getNrOfHits() { return this.hitNumber; }
 
+    /*! \fn public void setNrOfHits()
+        \brief Setter pentru numarul de hit-uri pe care le are eroul.
+     */
+    public void setNrOfHits(int nrOfHits) { this.hitNumber=nrOfHits; }
 }

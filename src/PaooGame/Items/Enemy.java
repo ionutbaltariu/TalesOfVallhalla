@@ -17,9 +17,9 @@ import java.awt.image.BufferedImage;
 public class Enemy  extends Character{
 
     BufferedImage image;
-    int type;
+    final float initialSpeed=this.GetSpeed();
 
-    /*! \fn public Enemy(RefLinks refLink, float x, float y, int width, int height, float speed, int life, int type)
+    /*! \fn public Enemy(RefLinks refLink, float x, float y, int width, int height, float speed, int life)
         \brief Constructor de initializare al clasei Enemy
 
         \param refLink Referinta catre obiectul shortcut (care retine alte referinte utile/necesare in joc).
@@ -29,42 +29,9 @@ public class Enemy  extends Character{
         \param height Inaltimea imaginii inamicului.
         \param speed Viteza inamicului.
         \param life Viata (lifepoints) inamicului.
-        \param type Tipul eroului. Fie 1, fie 2. 1-Death, 2-Dragon.
      */
-    public Enemy(RefLinks refLink, float x, float y, int width, int height, float speed, int life, int type) {
+    public Enemy(RefLinks refLink, float x, float y, int width, int height, float speed, int life) {
         super(refLink, x, y, width, height,speed,life);
-        this.type=type;
-        if(this.type==1) {
-            image = Assets.enemy1Down;
-            ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea implicita(normala)
-            normalBounds.x = 20;
-            normalBounds.y = 16;
-            normalBounds.width = 24;
-            normalBounds.height = 40;
-
-            ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea de atac
-            ///Setam deocamdata sa aiba un attack range de 10 in toate directiile.
-            attackBounds.x = 0;
-            attackBounds.y = 0;
-            attackBounds.width = 64;
-            attackBounds.height = 64;
-        }
-        if(this.type==2)
-        {
-            image = Assets.enemy2Down;
-            ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea implicita(normala)
-            normalBounds.x = 24;
-            normalBounds.y = 0;
-            normalBounds.width = 48;
-            normalBounds.height = 96;
-
-            ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea de atac
-            ///Setam deocamdata sa aiba un attack range de 10 in toate directiile.
-            attackBounds.x = 0;
-            attackBounds.y = 0;
-            attackBounds.width = 96;
-            attackBounds.height = 96;
-        }
     }
     /*! \fn public void Update()
         \brief Actualizeaza pozitia si imaginea inamicului.
@@ -74,9 +41,11 @@ public class Enemy  extends Character{
 
     }
 
+    /*! \fn public void Update(Hero hero)
+        \brief Actualizeaza pozitia si imaginea inamicului in functie de pozitia eroului.
+     */
     public void Update(Hero hero)
     {
-        followHero(hero);
         gettingKicked(hero);
     }
 
@@ -91,15 +60,11 @@ public class Enemy  extends Character{
         //vedem box-ul pentru coliziuni
 //        g.setColor(Color.blue);
 //        g.fillRect((int)(x + bounds.x), (int)(y + bounds.y), bounds.width, bounds.height);
-        //vedem box-ul pentru attack
+//        vedem box-ul pentru attack
 //        g.setColor(Color.black);
 //        g.fillRect((int)(x + attackBounds.x), (int)(y + attackBounds.y), attackBounds.width, attackBounds.height);
         g.drawImage(image, (int)x, (int)y, width, height, null);
     }
-
-    /*! \fn private boolean secondElapsed()
-        \brief Functie care contorizeaza trecerea unei secunde.
-     */
 
     /*! \fn private void giveDamage(Hero hero)
         \brief Functie care scade din viata eroului ca urmare a contactului intre acesta si monstru.
@@ -109,35 +74,38 @@ public class Enemy  extends Character{
     private void giveDamage(Hero hero)
     {
         if(hero.GetActualLife()>0)
-            hero.SetActualLife(hero.GetActualLife()-2);
+            hero.SetActualLife(hero.GetActualLife()-1);
     }
 
-    /*! \fn private void followHero(Hero hero)
+    /*! \fn protected void followHero(Hero hero, BufferedImage Up, BufferedImage Down)
         \brief Functie care permite urmarirea eroului pe harta. (Simpla urmare a coordonatelor acestuia.)
 
         \param hero Referinta catre eroul pe care il urmareste monstrul
+        \param Up Imaginea care portretizeaza inamicul cand merge inspre Nord
+        \param Down [..] cand merge inspre Sud
      */
-    private void followHero(Hero hero)
+    protected void followHero(Hero hero, BufferedImage Up, BufferedImage Down)
     {
+        float distance; // lungimea segmentului cu capetele player si monstru
+        float modifier; // o valoarea calculata in functie de distanta dintre erou si monstru pentru a mari viteza acestuia daca se afla la
+                        // o distanta mare
         if(!hero.isDead()) { //DACA EROUL NU ESTE MORT
             this.SetXMove(0); //resetam xMove la fiecare update
             this.SetYMove(0); //resetam yMove la fiecare update
+            distance=(float)(Math.sqrt(Math.pow(this.GetX()-hero.GetX(),2)+Math.pow(this.GetY()-hero.GetY(),2))); // calcul distanta intre 2 puncte
+            modifier=initialSpeed+distance/400f; // impartim la 400 pentru a obtine un modificator rezonabil
+            this.SetSpeed(modifier); // viteza va deveni valoarea modificatorului
+            // efectul este: viteza mare cand inamicul este la departare si viteza mica atunci cand este aproape de erou
             if (this.GetX() < hero.GetX()) { // daca x-ul monstrului este mai mic decat cel al eroului
                 this.SetXMove(this.GetXMove() + this.GetSpeed()); //setam miscarea monstrului pe axa x cu distanta egala cu vitezei acestuia
                 if (this.GetY() < hero.GetY()) { // daca y-ul monstrului este mai mic decat y-ul eroului
                     this.SetYMove(this.GetYMove() + this.GetSpeed()); // setam miscarea monstrului pe axa y cu distanta egala vitezei acestuia
-                    if(this.type==1)
-                        image = Assets.enemy1Down; // de asemenea, monstrul se afla mai sus decat eroul in acest caz, dam update la imagine
-                    if(this.type==2)
-                        image= Assets.enemy2Down;
+                    image=Down;
                     Move(); // abia aici se va misca efectiv monstrul
                 }
                 else {
                     this.SetYMove(this.GetYMove() - this.GetSpeed());
-                    if(this.type==1)
-                        image = Assets.enemy1Up;
-                    if(this.type==2)
-                        image = Assets.enemy2Up;
+                    image=Up;
                     Move();
                 }
             }
@@ -145,18 +113,12 @@ public class Enemy  extends Character{
                 this.SetXMove(this.GetXMove() - this.GetSpeed());
                 if (this.GetY() < hero.GetY()) {
                     this.SetYMove(this.GetYMove() + this.GetSpeed());
-                    if(this.type==1)
-                        image = Assets.enemy1Down;
-                    if(this.type==2)
-                        image = Assets.enemy2Down;
+                    image=Down;
                     Move();
                 }
                 else {
                     this.SetYMove(this.GetYMove() - this.GetSpeed());
-                    if(this.type==1)
-                        image = Assets.enemy1Up;
-                    if(this.type==2)
-                        image = Assets.enemy2Up;
+                    image=Up;
                     Move();
                 }
             }
@@ -178,59 +140,67 @@ public class Enemy  extends Character{
                 //coltului stang al eroului este intre limitarile de atac ale monstrului pe axa x
                 if (hero.GetY() + hero.attackBounds.y > y + attackBounds.y && hero.GetY() + attackBounds.y < y + this.attackBounds.height) { // testam daca Y-ul
                     //coltului stang al eroului este intre limitarile de atac ale monstrului pe axa y
-                    if (Character.secondElapsed()) // daca trece o secunda de suprapunere a coltului stang al eroului cu aria monstrului
+                    if (Assets.secondElapsed()) // daca trece o secunda de suprapunere a coltului stang al eroului cu aria monstrului
                     {
                         giveDamage(hero); // eroul pierde viata
                     }
-                    if (refLink.GetKeyManager().space) { // daca apasam space cand coltul stang se afla in aria in care monstrul poate fi atacat
-                        //este aruncat cu
-                        this.SetYMove(-50);
-                        MoveY(); // 50 pixeli pe axa y
-                        this.SetXMove(-50);
-                        MoveX(); // 50 50 pixeli pe axa x
-                        // in directia stanga sus
-                        hero.SetScore(hero.GetScore()+10);
+                    if(hero.getNrOfHits()>0) {
+                        if (refLink.GetKeyManager().space) { // daca apasam space cand coltul stang se afla in aria in care monstrul poate fi atacat
+                            //este aruncat cu
+                            this.SetYMove(-50);
+                            MoveY(); // 50 pixeli pe axa y
+                            this.SetXMove(-50);
+                            MoveX(); // 50 50 pixeli pe axa x
+                            // in directia stanga sus
+                            hero.setNrOfHits(hero.getNrOfHits()-1);
+                        }
                     }
                 }
                 //aceeasi descriere pentru colt stanga jos
                 if (hero.GetY() + hero.attackBounds.height > y + attackBounds.y && hero.GetY() + attackBounds.height < y + this.attackBounds.height) {
-                    if (Character.secondElapsed()) {
+                    if (Assets.secondElapsed()) {
                         giveDamage(hero);
                     }
-                    if (refLink.GetKeyManager().space) {
-                        this.SetYMove(50);
-                        MoveY();
-                        this.SetXMove(-50);
-                        MoveX();
-                        hero.SetScore(hero.GetScore()+10);
+                    if(hero.getNrOfHits()>0) {
+                        if (refLink.GetKeyManager().space) {
+                            this.SetYMove(50);
+                            MoveY();
+                            this.SetXMove(-50);
+                            MoveX();
+                            hero.setNrOfHits(hero.getNrOfHits()-1);
+                        }
                     }
                 }
             }
             //colt dreapta sus
             if (hero.GetX() + hero.attackBounds.width > x + attackBounds.x && hero.GetX() + attackBounds.width < x + this.attackBounds.width) {
                 if (hero.GetY() + hero.attackBounds.y > y + attackBounds.y && hero.GetY() + attackBounds.y < y + this.attackBounds.height) {
-                    if (Character.secondElapsed()) {
+                    if (Assets.secondElapsed()) {
                         giveDamage(hero);
                     }
-                    if (refLink.GetKeyManager().space) {
-                        this.SetYMove(-50);
-                        MoveY();
-                        this.SetXMove(50);
-                        MoveX();
-                        hero.SetScore(hero.GetScore()+10);
+                    if(hero.getNrOfHits()>0) {
+                        if (refLink.GetKeyManager().space) {
+                            this.SetYMove(-50);
+                            MoveY();
+                            this.SetXMove(50);
+                            MoveX();
+                            hero.setNrOfHits(hero.getNrOfHits()-1);
+                        }
                     }
                 }
                 //colt dreapta jos
                 if (hero.GetY() + hero.attackBounds.height > y + attackBounds.y && hero.GetY() + attackBounds.height < y + this.attackBounds.height) {
-                    if (Character.secondElapsed()) {
+                    if (Assets.secondElapsed()) {
                         giveDamage(hero);
                     }
-                    if (refLink.GetKeyManager().space) {
-                        this.SetYMove(50);
-                        MoveY();
-                        this.SetXMove(50);
-                        MoveX();
-                        hero.SetScore(hero.GetScore()+10);
+                    if(hero.getNrOfHits()>0) {
+                        if (refLink.GetKeyManager().space) {
+                            this.SetYMove(50);
+                            MoveY();
+                            this.SetXMove(50);
+                            MoveX();
+                            hero.setNrOfHits(hero.getNrOfHits()-1);
+                        }
                     }
                 }
             }

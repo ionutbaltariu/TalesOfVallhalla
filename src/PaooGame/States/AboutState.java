@@ -6,7 +6,7 @@ import PaooGame.RefLinks;
 import java.awt.*;
 
 /*! \class AboutState extends State
-    \brief Implementeaza notiunea de credentiale (about)
+    \brief Implementeaza notiunea de credentiale .
  */
 public class AboutState extends State
 {
@@ -24,27 +24,27 @@ public class AboutState extends State
         \brief Actualizeaza starea curenta a state-ului about.
      */
     @Override
-    public void Update()
-    {
+    public void Update(){
         //daca apasam butonul BACK, ne vom intoarce in meniul principal
         //cordonate determinate experimental
         //pot exista mici incercitudini
         if(refLink.GetMouseManager().getMouseY()>=851 && refLink.GetMouseManager().getMouseY()<=968)
         {
-            if(refLink.GetMouseManager().getMouseX()>=146 && refLink.GetMouseManager().getMouseX()<=465)
-            {
-                if(refLink.GetMouseManager().leftClickPressed())
-                    State.SetState(refLink.GetGame().getMenuState());
-            }
             if(refLink.GetMouseManager().getMouseX()>=470 && refLink.GetMouseManager().getMouseX()<=816)
             {
-                if(refLink.GetMouseManager().leftClickPressed())
-                    System.exit(0);
-            }
-            if(refLink.GetMouseManager().getMouseX()>=822 && refLink.GetMouseManager().getMouseX()<=1136)
-            {
-                if(refLink.GetMouseManager().leftClickPressed())
-                    State.SetState(refLink.GetGame().getPlayState());
+                if(refLink.GetMouseManager().leftClickPressed()) {
+                    Assets.buttonClick.setFramePosition(0);
+                    Assets.buttonClick.start();
+                    State.SetState(refLink.GetGame().getMenuState());
+                    // oprim thread-ul pentru 0.5s pentru a nu se apasa butoanele in ambele state-uri.
+                    try {
+                        Thread.sleep(500);
+                    }
+                    catch (InterruptedException e)
+                    {
+                        System.err.println("Eroare la intreruperea thread-ului in AboutState->Update()");
+                    }
+                }
             }
         }
     }

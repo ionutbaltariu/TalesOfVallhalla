@@ -22,10 +22,6 @@ public abstract class Character extends Item
     protected float xMove;    /*!< Retine noua pozitie a caracterului pe axa X.*/
     protected float yMove;    /*!< Retine noua pozitie a caracterului pe axa Y.*/
 
-    static boolean flag=false;
-    static long now;
-    static long then;
-
 
     /*! \fn public Character(RefLinks refLink, float x, float y, int width, int height)
         \brief Constructor de initializare al clasei Character
@@ -205,24 +201,6 @@ public abstract class Character extends Item
      */
     public int GetActualLife() { return this.actualLife; }
 
-    /*! \fn public static boolean secondElapsed()
-        \brief Functie ce contorizeaza trecerea unei secunde.
-     */
-    public static boolean secondElapsed()
-    {
-        if(!flag)
-        {
-            then= System.nanoTime();
-            flag=true;
-        }
-        now=System.nanoTime();
-        if(now-then>=1000000000)
-        {
-            flag=false;
-            return true;
-        }
-        return false;
-    }
 
 }
 

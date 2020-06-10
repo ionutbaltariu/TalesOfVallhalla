@@ -2,8 +2,11 @@ package PaooGame.Tiles;
 
 import PaooGame.Graphics.Assets;
 
+/*! \class HouseWindowTile extends Tile
+    \brief Abstractizeaza notiunea de dala de tip geam.
+ */
 public class HouseWindowTile extends Tile{
-    /*! \fn public LavaTile(int id)
+    /*! \fn public HouseWindowTile(int id)
 \brief Constructorul de initializare al clasei
 
 \param id Id-ul dalei util in desenarea hartii.

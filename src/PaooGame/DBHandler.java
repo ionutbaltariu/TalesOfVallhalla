@@ -18,8 +18,9 @@ public class DBHandler {
     {
         try
         {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:settings.db");
+            //exact ca in laborator
+            Class.forName("org.sqlite.JDBC"); //incarcam driverul
+            c = DriverManager.getConnection("jdbc:sqlite:settings.db"); // facem conexiunea cu baza de date.
             stmt = c.createStatement();
         }
         catch (Exception e)
@@ -100,7 +101,7 @@ public class DBHandler {
         return rs.getInt("AUTO_RETRY");
     }
 
-    /*! \fn public ublic void saveSettings(float heroX, float heroY, int heroLife, int heroScore, int lev1, int lev2, int start, float enemy1X, float enemy1Y, float enemy2X, float enemy2Y, int boss1Defeated, int boss2Defeated, long timer1, long timer2) throws SQLException
+    /*! \fn public void saveSettings(float heroX, float heroY, int heroLife, int heroScore, int lev1, int lev2, int start, float enemy1X, float enemy1Y, float enemy2X, float enemy2Y, int boss1Defeated, int boss2Defeated, long timer1, long timer2) throws SQLException
        \brief Functie de salvare a parametrilor vitali din joc pentru a-i incarca la apasarea butonului "Load".
 
        \param heroX pozitia eroului pe harta pe axa X.

@@ -12,7 +12,7 @@ import java.awt.event.KeyListener;
  */
 public class KeyManager implements KeyListener
 {
-    private boolean[] keys; /*!< Vector de flaguri pentru toate tastele. Tastele vor fi regasite dupa cod [0 - 255]*/
+    private final boolean[] keys; /*!< Vector de flaguri pentru toate tastele. Tastele vor fi regasite dupa cod [0 - 255]*/
     public boolean up;      /*!< Flag pentru tasta "W" apasata.*/
     public boolean down;    /*!< Flag pentru tasta "S" apasata.*/
     public boolean left;    /*!< Flag pentru tasta "A" apasata.*/

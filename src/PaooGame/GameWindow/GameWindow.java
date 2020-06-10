@@ -1,8 +1,5 @@
 package PaooGame.GameWindow;
 
-import PaooGame.RefLinks;
-import PaooGame.States.State;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,12 +12,12 @@ import java.awt.*;
  */
 public class GameWindow
 {
-    private JFrame  WindowFrame;       /*!< fereastra principala a jocului*/
-    private String  WindowTitle;       /*!< titlul ferestrei*/
-    private int     WindowWidth;       /*!< latimea ferestrei in pixeli*/
-    private int     WindowHeight;      /*!< inaltimea ferestrei in pixeli*/
+    private JFrame  WindowFrame;             /*!< fereastra principala a jocului*/
+    private final String  WindowTitle;       /*!< titlul ferestrei*/
+    private final int     WindowWidth;       /*!< latimea ferestrei in pixeli*/
+    private final int     WindowHeight;      /*!< inaltimea ferestrei in pixeli*/
 
-    private Canvas  canvas;         /*!< "panza/tablou" in care se poate desena*/
+    private Canvas  canvas;                 /*!< "panza/tablou" in care se poate desena*/
 
     /*! \fn GameWindow(String title, int width, int height)
             \brief Constructorul cu parametri al clasei GameWindow
