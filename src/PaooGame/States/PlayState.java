@@ -84,7 +84,7 @@ public class PlayState extends State
         }
         if(Level1State.wasBoss1Defeated && Level2State.wasBoss2Defeated)
         {
-            hero.SetScore(hero.getNrOfHits()*50); // de aceea spuneam ca e de preferat sa nu folosim excesiv hit-urile.
+            hero.SetScore(hero.GetScore()+hero.getNrOfHits()*50); // de aceea spuneam ca e de preferat sa nu folosim excesiv hit-urile.
             // scorul creste in functie de cate hit-uri nu a folosit eroul.
             map.setTile(7,22,11);
             if((int)(hero.GetX()/ Tile.TILE_WIDTH+1)==7 && (int)(hero.GetY()/Tile.TILE_HEIGHT+1)==22)
