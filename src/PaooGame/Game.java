@@ -91,6 +91,7 @@ public class Game implements Runnable
         \param width Latimea ferestrei in pixeli.
         \param height Inaltimea ferestrei in pixeli.
      */
+
     public Game(String title, int width, int height) {
             /// Obiectul GameWindow este creat insa fereastra nu este construita
             /// Acest lucru va fi realizat in metoda init() prin apelul
