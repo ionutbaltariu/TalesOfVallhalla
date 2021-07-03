@@ -1,9 +1,8 @@
 package PaooGame.States;
 
-import java.awt.*;
-import java.sql.SQLException;
-
 import PaooGame.RefLinks;
+
+import java.awt.*;
 
 /*! \class State
     \brief Implementeaza notiunea abstracta de stare a jocului/programului.
@@ -12,14 +11,13 @@ import PaooGame.RefLinks;
     un meniu care sa contine optiuni: New Game, Load Game, Settings, About etc. Toate aceste optiuni nu sunt altceva
     decat stari ale programului (jocului) ce trebuiesc incarcate si afisate functie de starea curenta.
  */
-public abstract class State
-{
-        ///Urmatoarele atribute sunt statice pentru a evita dealocarea spatiului de memorie la trecerea dintr-o stare in alta.
-    private static State previousState  = null; /*!< Referinta catre starea anterioara a jocului.*/
-    private static State currentState   = null; /*!< Referinta catre starea curenta a jocului: game, meniu, settings, about etc.*/
+public abstract class State {
+    ///Urmatoarele atribute sunt statice pentru a evita dealocarea spatiului de memorie la trecerea dintr-o stare in alta.
+    private static State previousState = null; /*!< Referinta catre starea anterioara a jocului.*/
+    private static State currentState = null; /*!< Referinta catre starea curenta a jocului: game, meniu, settings, about etc.*/
     protected final RefLinks refLink;
-    public State(RefLinks refLink)
-    {
+
+    public State(RefLinks refLink) {
         this.refLink = refLink;
     }
 
@@ -28,8 +26,7 @@ public abstract class State
 
         \param state Noua stare a programului (jocului).
      */
-    public static void SetState(State state)
-    {
+    public static void SetState(State state) {
         previousState = currentState;
         currentState = state;
     }
@@ -39,8 +36,7 @@ public abstract class State
                    Foarte util cand comutam intre states in meniu.
 
     */
-    public static State GetState()
-    {
+    public static State GetState() {
         return currentState;
     }
 
@@ -49,10 +45,13 @@ public abstract class State
                    Foarte util cand suntem in "PauseState". Pentru a sti din ce State am ajuns acolo.
 
     */
-    public static State GetPreviousState() { return previousState; }
+    public static State GetPreviousState() {
+        return previousState;
+    }
 
-        ///Metoda abstracta destinata actualizarii starii curente
+    ///Metoda abstracta destinata actualizarii starii curente
     public abstract void Update();
-        ///Metoda abstracta destinata desenarii starii curente
+
+    ///Metoda abstracta destinata desenarii starii curente
     public abstract void Draw(Graphics g);
 }

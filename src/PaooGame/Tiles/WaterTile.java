@@ -5,15 +5,13 @@ import PaooGame.Graphics.Assets;
 /*! \class WaterTile extends Tile
     \brief Abstractizeaza notiunea de dala de tip apa.
  */
-public class WaterTile extends Tile
-{
+public class WaterTile extends Tile {
     /*! \fn public WaterTile(int id)
        \brief Constructorul de initializare al clasei
 
        \param id Id-ul dalei util in desenarea hartii.
     */
-    public WaterTile(int id)
-    {
+    public WaterTile(int id) {
         super(Assets.water, id);
     }
 
@@ -21,8 +19,7 @@ public class WaterTile extends Tile
        \brief Suprascrie metoda IsSolid() din clasa de baza in sensul ca va fi luat in calcul in caz de coliziune.
     */
     @Override
-    public boolean IsSolid()
-    {
+    public boolean IsSolid() {
         return true;
     }
 }

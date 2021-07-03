@@ -5,14 +5,13 @@ import PaooGame.Graphics.Assets;
 /*! \class LavaTile extends Tile
     \brief Abstractizeaza notiunea de dala de tip lava.
  */
-public class LavaTile extends Tile{
+public class LavaTile extends Tile {
     /*! \fn public LavaTile(int id)
    \brief Constructorul de initializare al clasei
 
    \param id Id-ul dalei util in desenarea hartii.
     */
-    public LavaTile(int id)
-    {
+    public LavaTile(int id) {
         /// Apel al constructorului clasei de baza
         super(Assets.lava, id);
     }
@@ -21,8 +20,7 @@ public class LavaTile extends Tile{
         \brief Suprascrie metoda IsSolid() din clasa de baza in sensul ca va fi luat in calcul in caz de coliziune.
      */
     @Override
-    public boolean IsSolid()
-    {
+    public boolean IsSolid() {
         return true;
     }
 }

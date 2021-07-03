@@ -5,14 +5,13 @@ import PaooGame.Graphics.Assets;
 /*! \class HouseWallTile extends Tile
     \brief Abstractizeaza notiunea de dala de tip perete.
  */
-public class HouseWallTile extends Tile{
+public class HouseWallTile extends Tile {
     /*! \fn public HouseWallTile(int id)
 \brief Constructorul de initializare al clasei
 
 \param id Id-ul dalei util in desenarea hartii.
 */
-    public HouseWallTile(int id)
-    {
+    public HouseWallTile(int id) {
         /// Apel al constructorului clasei de baza
         super(Assets.houseWall, id);
     }
@@ -21,8 +20,7 @@ public class HouseWallTile extends Tile{
         \brief Suprascrie metoda IsSolid() din clasa de baza in sensul ca va fi luat in calcul in caz de coliziune.
      */
     @Override
-    public boolean IsSolid()
-    {
+    public boolean IsSolid() {
         return true;
     }
 }

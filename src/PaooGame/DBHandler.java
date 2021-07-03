@@ -14,27 +14,24 @@ public class DBHandler {
     /*! \fn public DBHandler()
         \brief Constructorul de initializare al clasei DBHandler in care se indica driverul si baza de date la care sa ne conectam.
      */
-    public DBHandler()
-    {
-        try
-        {
+    public DBHandler() {
+        try {
             //exact ca in laborator
             Class.forName("org.sqlite.JDBC"); //incarcam driverul
             c = DriverManager.getConnection("jdbc:sqlite:settings.db"); // facem conexiunea cu baza de date.
             stmt = c.createStatement();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
     }
+
     /*! \fn public void updateDifficulty(int difficulty) throws SQLException
         \brief Functie ce scrie in baza de date dificultatea aleasa de utilizator in meniul "Settings".
 
         \param difficulty Este un int care ia valori de la 1 la 3 si reprezinta dificultatea jocului. Folosit pentru a "scala" viteza inamicilor/etc.
      */
     public void updateDifficulty(int difficulty) throws SQLException {
-        String instruction="UPDATE SETTINGS set DIFFICULTY ="+difficulty+" WHERE ID=1;";
+        String instruction = "UPDATE SETTINGS set DIFFICULTY =" + difficulty + " WHERE ID=1;";
         stmt.executeUpdate(instruction);
     }
 
@@ -43,8 +40,8 @@ public class DBHandler {
 
         \param volume este intregul care reprezinta procentajul la care utilizatorul doreste sa se auda muzica.
      */
-    public void updateMenuMusicVolume(int volume) throws  SQLException {
-        String instruction="UPDATE SETTINGS set MENU_MUSIC_VOLUME ="+volume+" WHERE ID=1;";
+    public void updateMenuMusicVolume(int volume) throws SQLException {
+        String instruction = "UPDATE SETTINGS set MENU_MUSIC_VOLUME =" + volume + " WHERE ID=1;";
         stmt.executeUpdate(instruction);
     }
 
@@ -53,8 +50,8 @@ public class DBHandler {
 
         \param volume este intregul care reprezinta procentajul la care utilizatorul doreste sa se auda muzica.
      */
-    public void updateGameMusicVolume(int volume) throws  SQLException {
-        String instruction="UPDATE SETTINGS set GAME_MUSIC_VOLUME ="+volume+" WHERE ID=1;";
+    public void updateGameMusicVolume(int volume) throws SQLException {
+        String instruction = "UPDATE SETTINGS set GAME_MUSIC_VOLUME =" + volume + " WHERE ID=1;";
         stmt.executeUpdate(instruction);
     }
 
@@ -63,8 +60,8 @@ public class DBHandler {
 
         \param AR un flag, daca valoarea este 1 (sqlite neavand boolean), autoretry la moarte va fi pornit.
      */
-    public void updateAutoRetry(int AR) throws  SQLException {
-        String instruction="UPDATE SETTINGS set AUTO_RETRY ="+AR+" WHERE ID=1;";
+    public void updateAutoRetry(int AR) throws SQLException {
+        String instruction = "UPDATE SETTINGS set AUTO_RETRY =" + AR + " WHERE ID=1;";
         stmt.executeUpdate(instruction);
     }
 
@@ -72,7 +69,7 @@ public class DBHandler {
         \brief Functie de extragere a dificultatii din baza de date pentru ne folosi de ea in joc.
      */
     public int getDifficulty() throws SQLException {
-        rs=stmt.executeQuery("SELECT * FROM SETTINGS;");
+        rs = stmt.executeQuery("SELECT * FROM SETTINGS;");
         rs.getInt("DIFFICULTY");
         return rs.getInt("DIFFICULTY");
     }
@@ -81,7 +78,7 @@ public class DBHandler {
         \brief Functie de extragere a volumului din meniu din baza de date pentru a-l modifica in timp real.
      */
     public int getMenuVolume() throws SQLException {
-        rs=stmt.executeQuery("SELECT * FROM SETTINGS;");
+        rs = stmt.executeQuery("SELECT * FROM SETTINGS;");
         return rs.getInt("MENU_MUSIC_VOLUME");
     }
 
@@ -89,7 +86,7 @@ public class DBHandler {
         \brief Functie de extragere a volumului din joc din baza de date pentru a-l modifica in timp real.
      */
     public int getGameVolume() throws SQLException {
-        rs=stmt.executeQuery("SELECT * FROM SETTINGS;");
+        rs = stmt.executeQuery("SELECT * FROM SETTINGS;");
         return rs.getInt("GAME_MUSIC_VOLUME");
     }
 
@@ -97,7 +94,7 @@ public class DBHandler {
        \brief Functie de extragere a flagului de autoretry din baza de date pentru a-l modifica in timp real.
     */
     public int getAR() throws SQLException {
-        rs=stmt.executeQuery("SELECT * FROM SETTINGS;");
+        rs = stmt.executeQuery("SELECT * FROM SETTINGS;");
         return rs.getInt("AUTO_RETRY");
     }
 
@@ -123,7 +120,7 @@ public class DBHandler {
     public void saveSettings(float heroX, float heroY, int heroLife, int heroScore, int lev1, int lev2, int start, float enemy1X, float enemy1Y,
                              float enemy2X, float enemy2Y, int boss1Defeated, int boss2Defeated, long timer1, long timer2) throws SQLException {
         String instruction = "INSERT INTO SAVEGAMES (HERO_X,HERO_Y,HERO_LIFE,HERO_SCORE,IS_IN_LEVEL1,IS_IN_LEVEL2,IS_IN_START,ENEMY1_X,ENEMY1_Y,ENEMY2_X,ENEMY2_Y, BOSS1_DEFEATED, BOSS2_DEFEATED, TIMER1, TIMER2)" +
-                " VALUES ("+heroX+", "+heroY+", "+heroLife+", "+heroScore+", "+lev1+", "+lev2+", "+start+", "+enemy1X+", "+enemy1Y+", "+enemy2X+", "+enemy2Y+", "+boss1Defeated+", "+boss2Defeated+", "+timer1+", "+timer2+");";
+                " VALUES (" + heroX + ", " + heroY + ", " + heroLife + ", " + heroScore + ", " + lev1 + ", " + lev2 + ", " + start + ", " + enemy1X + ", " + enemy1Y + ", " + enemy2X + ", " + enemy2Y + ", " + boss1Defeated + ", " + boss2Defeated + ", " + timer1 + ", " + timer2 + ");";
         stmt.executeUpdate(instruction);
     }
 
@@ -132,10 +129,9 @@ public class DBHandler {
      */
     public float getHeroX() throws SQLException {
         float x = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            x=rs.getFloat("HERO_X");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            x = rs.getFloat("HERO_X");
         }
         return x;
     }
@@ -145,10 +141,9 @@ public class DBHandler {
      */
     public float getHeroY() throws SQLException {
         float y = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            y=rs.getFloat("HERO_Y");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            y = rs.getFloat("HERO_Y");
         }
         return y;
     }
@@ -158,10 +153,9 @@ public class DBHandler {
      */
     public float getEnemy1X() throws SQLException {
         float x = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            x=rs.getFloat("ENEMY1_X");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            x = rs.getFloat("ENEMY1_X");
         }
         return x;
     }
@@ -171,10 +165,9 @@ public class DBHandler {
      */
     public float getEnemy1Y() throws SQLException {
         float y = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            y=rs.getFloat("ENEMY1_Y");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            y = rs.getFloat("ENEMY1_Y");
         }
         return y;
     }
@@ -184,10 +177,9 @@ public class DBHandler {
      */
     public float getEnemy2X() throws SQLException {
         float x = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            x=rs.getFloat("ENEMY2_X");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            x = rs.getFloat("ENEMY2_X");
         }
         return x;
     }
@@ -197,10 +189,9 @@ public class DBHandler {
      */
     public float getEnemy2Y() throws SQLException {
         float y = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            y=rs.getFloat("ENEMY2_Y");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            y = rs.getFloat("ENEMY2_Y");
         }
         return y;
     }
@@ -210,10 +201,9 @@ public class DBHandler {
      */
     public int getHeroLife() throws SQLException {
         int x = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            x=rs.getInt("HERO_LIFE");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            x = rs.getInt("HERO_LIFE");
         }
         return x;
     }
@@ -223,10 +213,9 @@ public class DBHandler {
      */
     public int getHeroScore() throws SQLException {
         int x = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            x=rs.getInt("HERO_SCORE");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            x = rs.getInt("HERO_SCORE");
         }
         return x;
     }
@@ -236,10 +225,9 @@ public class DBHandler {
      */
     public int getIsInLvl1() throws SQLException {
         int x = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            x=rs.getInt("IS_IN_LEVEL1");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            x = rs.getInt("IS_IN_LEVEL1");
         }
         return x;
     }
@@ -249,10 +237,9 @@ public class DBHandler {
      */
     public int getIsInLvl2() throws SQLException {
         int x = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            x=rs.getInt("IS_IN_LEVEL2");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            x = rs.getInt("IS_IN_LEVEL2");
         }
         return x;
     }
@@ -262,10 +249,9 @@ public class DBHandler {
      */
     public int getIsInStart() throws SQLException {
         int x = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            x=rs.getInt("IS_IN_START");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            x = rs.getInt("IS_IN_START");
         }
         return x;
     }
@@ -275,10 +261,9 @@ public class DBHandler {
      */
     public int wasBoss1Defeated() throws SQLException {
         int x = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            x=rs.getInt("BOSS1_DEFEATED");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            x = rs.getInt("BOSS1_DEFEATED");
         }
         return x;
     }
@@ -288,10 +273,9 @@ public class DBHandler {
      */
     public int wasBoss2Defeated() throws SQLException {
         int x = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            x=rs.getInt("BOSS2_DEFEATED");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            x = rs.getInt("BOSS2_DEFEATED");
         }
         return x;
     }
@@ -301,10 +285,9 @@ public class DBHandler {
      */
     public long getIterator1() throws SQLException {
         int x = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            x=rs.getInt("TIMER1");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            x = rs.getInt("TIMER1");
         }
         return x;
     }
@@ -314,15 +297,12 @@ public class DBHandler {
      */
     public long getIterator2() throws SQLException {
         int x = 0;
-        rs=stmt.executeQuery("SELECT * FROM SAVEGAMES;");
-        while(rs.next())
-        {
-            x=rs.getInt("TIMER2");
+        rs = stmt.executeQuery("SELECT * FROM SAVEGAMES;");
+        while (rs.next()) {
+            x = rs.getInt("TIMER2");
         }
         return x;
     }
-
-
 
 
 }

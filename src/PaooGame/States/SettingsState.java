@@ -12,15 +12,14 @@ import java.sql.SQLException;
 
     Aici setarile vor trebui salvate/incarcate intr-un/dintr-un fisier/baza de date sqlite.
  */
-public class SettingsState extends State
-{
+public class SettingsState extends State {
     /*! \fn public SettingsState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
 
         \param refLink O referinta catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
      */
-    public SettingsState(RefLinks refLink){
-            ///Apel al construcotrului clasei de baza.
+    public SettingsState(RefLinks refLink) {
+        ///Apel al construcotrului clasei de baza.
         super(refLink);
     }
 
@@ -28,20 +27,17 @@ public class SettingsState extends State
         \brief Actualizeaza starea setarilor.
      */
     @Override
-    public void Update(){
-        if(refLink.GetMouseManager().getMouseY()>=851 && refLink.GetMouseManager().getMouseY()<=968)
-        {
-            if(refLink.GetMouseManager().getMouseX()>=146 && refLink.GetMouseManager().getMouseX()<=465)
-            {
-                if(refLink.GetMouseManager().leftClickPressed()) {
+    public void Update() {
+        if (refLink.GetMouseManager().getMouseY() >= 851 && refLink.GetMouseManager().getMouseY() <= 968) {
+            if (refLink.GetMouseManager().getMouseX() >= 146 && refLink.GetMouseManager().getMouseX() <= 465) {
+                if (refLink.GetMouseManager().leftClickPressed()) {
                     Assets.buttonClick.setFramePosition(0);
                     Assets.buttonClick.start();
                     State.SetState(refLink.GetGame().getMenuState());
                 }
             }
-            if(refLink.GetMouseManager().getMouseX()>=822 && refLink.GetMouseManager().getMouseX()<=1136)
-            {
-                if(refLink.GetMouseManager().leftClickPressed()) {
+            if (refLink.GetMouseManager().getMouseX() >= 822 && refLink.GetMouseManager().getMouseX() <= 1136) {
+                if (refLink.GetMouseManager().leftClickPressed()) {
                     Assets.buttonClick.setFramePosition(0);
                     Assets.buttonClick.start();
                     System.exit(0);
@@ -49,7 +45,7 @@ public class SettingsState extends State
             }
         }
 
-        if(refLink.GetMouseManager().getMouseX()>=940 && refLink.GetMouseManager().getMouseX()<=1080) {
+        if (refLink.GetMouseManager().getMouseX() >= 940 && refLink.GetMouseManager().getMouseX() <= 1080) {
             try {
                 //changing difficulty
                 if (refLink.GetMouseManager().getMouseY() >= 424 && refLink.GetMouseManager().getMouseY() <= 474) {
@@ -94,13 +90,9 @@ public class SettingsState extends State
                         Thread.sleep(100);
                     }
                 }
-            }
-            catch(SQLException e)
-            {
+            } catch (SQLException e) {
                 System.err.println("Eroare la incarcare din baza de date in SettingsState->Update.");
-            }
-            catch(InterruptedException e)
-            {
+            } catch (InterruptedException e) {
                 System.err.println("Eroare la intreruperea thread-ului in SettingsState.");
             }
         }
@@ -113,7 +105,7 @@ public class SettingsState extends State
      */
     @Override
     public void Draw(Graphics g) {
-        g.drawImage(Assets.settingsBackground,0,0,refLink.GetWidth(),refLink.GetHeight(),null);
+        g.drawImage(Assets.settingsBackground, 0, 0, refLink.GetWidth(), refLink.GetHeight(), null);
         g.setColor(Color.black);
         g.setFont(new Font("Serif", Font.PLAIN, 48));
         try {
@@ -131,9 +123,7 @@ public class SettingsState extends State
             else {
                 g.drawString("True", 640, 710);
             }
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             System.err.println("Eroare la incarcare din baza de date in SettingsState->Draw.");
         }
     }

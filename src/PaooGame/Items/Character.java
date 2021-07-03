@@ -9,11 +9,10 @@ import PaooGame.Tiles.Tile;
     Notiunea este definita doar de viata, viteza de deplasare si distanta cu care trebuie sa se
     miste/deplaseze in urma calculelor.
  */
-public abstract class Character extends Item
-{
-    public static final int DEFAULT_LIFE            = 10;   /*!< Valoarea implicita a vietii unui caracter.*/
-    public static final float DEFAULT_SPEED         = 3.0f; /*!< Viteza implicita a unu caracter.*/
-    public static final int DEFAULT_HERO_WIDTH  = 48;   /*!< Latimea implicita a imaginii caracterului.*/
+public abstract class Character extends Item {
+    public static final int DEFAULT_LIFE = 10;   /*!< Valoarea implicita a vietii unui caracter.*/
+    public static final float DEFAULT_SPEED = 3.0f; /*!< Viteza implicita a unu caracter.*/
+    public static final int DEFAULT_HERO_WIDTH = 48;   /*!< Latimea implicita a imaginii caracterului.*/
     public static final int DEFAULT_HERO_HEIGHT = 48;   /*!< Inaltimea implicita a imaginii caracterului.*/
 
     protected int life;       /*!< Retine viata de inceput caracterului.*/
@@ -32,38 +31,35 @@ public abstract class Character extends Item
         \param width Latimea imaginii caracterului.
         \param height Inaltimea imaginii caracterului.
      */
-    public Character(RefLinks refLink, float x, float y, int width, int height)
-    {
-            ///Apel constructor la clasei de baza
-        super(refLink, x,y, width, height);
-            //Seteaza pe valorile implicite pentru viata, viteza si distantele de deplasare
-        life    = DEFAULT_LIFE;
-        actualLife=life;
-        speed   = DEFAULT_SPEED;
-        xMove   = 0;
-        yMove   = 0;
+    public Character(RefLinks refLink, float x, float y, int width, int height) {
+        ///Apel constructor la clasei de baza
+        super(refLink, x, y, width, height);
+        //Seteaza pe valorile implicite pentru viata, viteza si distantele de deplasare
+        life = DEFAULT_LIFE;
+        actualLife = life;
+        speed = DEFAULT_SPEED;
+        xMove = 0;
+        yMove = 0;
     }
 
-    public Character(RefLinks refLink, float x, float y, int width, int height, float speed, int life)
-    {
+    public Character(RefLinks refLink, float x, float y, int width, int height, float speed, int life) {
         ///Apel constructor la clasei de baza
-        super(refLink, x,y, width, height);
+        super(refLink, x, y, width, height);
         //Seteaza pe valorile implicite pentru viata, viteza si distantele de deplasare
         this.life = life;
-        actualLife=life;
+        actualLife = life;
         this.speed = speed;
-        xMove   = 0;
-        yMove   = 0;
+        xMove = 0;
+        yMove = 0;
     }
 
 
     /*! \fn public void Move()
         \brief Modifica pozitia caracterului
      */
-    public void Move()
-    {
-            ///Modifica pozitia caracterului pe axa X.
-            ///Modifica pozitia caracterului pe axa Y.
+    public void Move() {
+        ///Modifica pozitia caracterului pe axa X.
+        ///Modifica pozitia caracterului pe axa Y.
         MoveX();
         MoveY();
     }
@@ -71,24 +67,20 @@ public abstract class Character extends Item
     /*! \fn public void MoveX()
         \brief Modifica pozitia caracterului pe axa X.
      */
-    public void MoveX()
-    {
+    public void MoveX() {
         int tx;
-            ///Aduna la pozitia curenta numarul de pixeli cu care trebuie sa se deplaseze pe axa X.
-        if(xMove>0) // caracterul se misca la dreapta
+        ///Aduna la pozitia curenta numarul de pixeli cu care trebuie sa se deplaseze pe axa X.
+        if (xMove > 0) // caracterul se misca la dreapta
         {
-            tx=(int)(x+xMove+bounds.x+bounds.width) / Tile.TILE_WIDTH;
-            if(!collision(tx,(int)(y + bounds.y) / Tile.TILE_HEIGHT)  && !collision(tx,(int)(y+bounds.y+bounds.height)/Tile.TILE_HEIGHT))
-            {
-                x+=xMove;
+            tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILE_WIDTH;
+            if (!collision(tx, (int) (y + bounds.y) / Tile.TILE_HEIGHT) && !collision(tx, (int) (y + bounds.y + bounds.height) / Tile.TILE_HEIGHT)) {
+                x += xMove;
             }
-        }
-        else // caracterul se misca la stanga
+        } else // caracterul se misca la stanga
         {
-            tx=(int)(x+xMove+bounds.x) / Tile.TILE_WIDTH;
-            if(!collision(tx,(int)(y + bounds.y) / Tile.TILE_HEIGHT)  && !collision(tx,(int)(y+bounds.y+bounds.height)/Tile.TILE_HEIGHT))
-            {
-                x+=xMove;
+            tx = (int) (x + xMove + bounds.x) / Tile.TILE_WIDTH;
+            if (!collision(tx, (int) (y + bounds.y) / Tile.TILE_HEIGHT) && !collision(tx, (int) (y + bounds.y + bounds.height) / Tile.TILE_HEIGHT)) {
+                x += xMove;
             }
         }
     }
@@ -96,24 +88,18 @@ public abstract class Character extends Item
     /*! \fn public void MoveY()
         \brief Modifica pozitia caracterului pe axa Y.
      */
-    public void MoveY()
-    {
+    public void MoveY() {
         int ty;
-            ///Aduna la pozitia curenta numarul de pixeli cu care trebuie sa se deplaseze pe axa Y.
-        if(yMove<0)
-        {
-            ty=(int)(y+yMove+bounds.y)/Tile.TILE_HEIGHT;
-            if(!collision((int)(x+bounds.x)/Tile.TILE_WIDTH,ty) && !collision((int)(x+bounds.x+bounds.width)/Tile.TILE_WIDTH,ty))
-            {
-                y+=yMove;
+        ///Aduna la pozitia curenta numarul de pixeli cu care trebuie sa se deplaseze pe axa Y.
+        if (yMove < 0) {
+            ty = (int) (y + yMove + bounds.y) / Tile.TILE_HEIGHT;
+            if (!collision((int) (x + bounds.x) / Tile.TILE_WIDTH, ty) && !collision((int) (x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty)) {
+                y += yMove;
             }
-        }
-        else if(yMove>=0)
-        {
-            ty=(int)(y+yMove+bounds.y+bounds.height)/Tile.TILE_HEIGHT;
-            if(!collision((int)(x+bounds.x)/Tile.TILE_WIDTH,ty) && !collision((int)(x+bounds.x+bounds.width)/Tile.TILE_WIDTH,ty))
-            {
-                y+=yMove;
+        } else if (yMove >= 0) {
+            ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILE_HEIGHT;
+            if (!collision((int) (x + bounds.x) / Tile.TILE_WIDTH, ty) && !collision((int) (x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty)) {
+                y += yMove;
             }
 
         }
@@ -122,33 +108,29 @@ public abstract class Character extends Item
     /*! \fn public boolean collision(int x, int y)
         \brief returneaza daca tile-ul de la coordonatele (x,y) este solid pentru a putea implementa coliziunile.
      */
-    protected boolean collision(int x, int y)
-    {
-        return refLink.GetMap().GetTile(x,y).IsSolid();
+    protected boolean collision(int x, int y) {
+        return refLink.GetMap().GetTile(x, y).IsSolid();
     }
 
 
     /*! \fn public int GetLife()
         \brief Returneaza viata caracterului.
      */
-    public int GetLife()
-    {
+    public int GetLife() {
         return life;
     }
 
     /*! \fn public int GetSpeed()
         \brief Returneaza viteza caracterului.
      */
-    public float GetSpeed()
-    {
+    public float GetSpeed() {
         return speed;
     }
 
     /*! \fn public void SetLife(int life)
         \brief Seteaza viata caracterului.
      */
-    public void SetLife(int life)
-    {
+    public void SetLife(int life) {
         this.life = life;
     }
 
@@ -162,44 +144,44 @@ public abstract class Character extends Item
     /*! \fn public float GetXMove()
         \brief Returneaza distanta in pixeli pe axa X cu care este actualizata pozitia caracterului.
      */
-    public float GetXMove()
-    {
+    public float GetXMove() {
         return xMove;
     }
 
     /*! \fn public float GetYMove()
         \brief Returneaza distanta in pixeli pe axa Y cu care este actualizata pozitia caracterului.
      */
-    public float GetYMove()
-    {
+    public float GetYMove() {
         return yMove;
     }
 
     /*! \fn public void SetXMove(float xMove)
         \brief Seteaza distanta in pixeli pe axa X cu care va fi actualizata pozitia caracterului.
      */
-    public void SetXMove(float xMove)
-    {
+    public void SetXMove(float xMove) {
         this.xMove = xMove;
     }
 
     /*! \fn public void SetYMove(float yMove)
         \brief Seteaza distanta in pixeli pe axa Y cu care va fi actualizata pozitia caracterului.
      */
-    public void SetYMove(float yMove)
-    {
+    public void SetYMove(float yMove) {
         this.yMove = yMove;
     }
 
     /*! \fn public void SetActualLife(int actualLife)
         \brief Seteaza viata in timp real a eroului.
      */
-    public void SetActualLife(int actualLife) { this.actualLife = actualLife; }
+    public void SetActualLife(int actualLife) {
+        this.actualLife = actualLife;
+    }
 
     /*! \fn public int GetActualLife()
         \brief Returneaza viata in timp real a eroului.
      */
-    public int GetActualLife() { return this.actualLife; }
+    public int GetActualLife() {
+        return this.actualLife;
+    }
 
 
 }

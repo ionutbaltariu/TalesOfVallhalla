@@ -8,12 +8,11 @@ import java.awt.*;
 /*! \class Map
     \brief Implementeaza notiunea de harta a jocului.
  */
-public class Map
-{
+public class Map {
     private final RefLinks refLink;   /*!< O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.*/
+    public int[][] tiles;     /*!< Referinta catre o matrice cu codurile dalelor ce vor construi harta.*/
     private int width;          /*!< Latimea hartii in numar de dale.*/
     private int height;         /*!< Inaltimea hartii in numar de dale.*/
-    public int [][] tiles;     /*!< Referinta catre o matrice cu codurile dalelor ce vor construi harta.*/
 
     /*! \fn public Map(RefLinks refLink, int mapNumber)
         \brief Constructorul de initializare al clasei.
@@ -21,19 +20,17 @@ public class Map
         \param refLink O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
         \param mapNumber reprezinta tipul hartii: de intrare, level1, level2.
      */
-    public Map(RefLinks refLink, int mapNumber)
-    {
-            /// Retine referinta "shortcut".
+    public Map(RefLinks refLink, int mapNumber) {
+        /// Retine referinta "shortcut".
         this.refLink = refLink;
-            ///incarca harta de start. Functia poate primi ca argument id-ul hartii ce poate fi incarcat.
+        ///incarca harta de start. Functia poate primi ca argument id-ul hartii ce poate fi incarcat.
         LoadWorld(mapNumber);
     }
 
     /*! \fn public  void Update()
         \brief Actualizarea hartii in functie de evenimente (un copac a fost taiat)
      */
-    public  void Update()
-    {
+    public void Update() {
 
     }
 
@@ -42,13 +39,10 @@ public class Map
 
         \param g Contextl grafi in care se realizeaza desenarea.
      */
-    public void Draw(Graphics g)
-    {
-            ///Se parcurge matricea de dale (codurile aferente) si se deseneaza harta respectiva
-        for(int y = 0; y < refLink.GetGame().GetHeight()/Tile.TILE_HEIGHT; y++)
-        {
-            for(int x = 0; x < refLink.GetGame().GetWidth()/Tile.TILE_WIDTH; x++)
-            {
+    public void Draw(Graphics g) {
+        ///Se parcurge matricea de dale (codurile aferente) si se deseneaza harta respectiva
+        for (int y = 0; y < refLink.GetGame().GetHeight() / Tile.TILE_HEIGHT; y++) {
+            for (int x = 0; x < refLink.GetGame().GetWidth() / Tile.TILE_WIDTH; x++) {
                 GetTile(x, y).Draw(g, x * Tile.TILE_HEIGHT, y * Tile.TILE_WIDTH);
             }
         }
@@ -60,23 +54,19 @@ public class Map
         In situatia in care dala nu este gasita datorita unei erori ce tine de cod dala, coordonate gresite etc se
         intoarce o dala predefinita (ex. grassTile, mountainTile)
      */
-    public Tile GetTile(int x, int y)
-    {
-        if(x < 0 || y < 0 || x >= width || y >= height)
-        {
+    public Tile GetTile(int x, int y) {
+        if (x < 0 || y < 0 || x >= width || y >= height) {
             return Tile.grassTile;
         }
         Tile t = Tile.tiles[tiles[x][y]];
-        if(t == null)
-        {
+        if (t == null) {
             return Tile.rockTile;
         }
         return t;
     }
 
-    public void setTile(int x,int y,int id)
-    {
-        tiles[x][y]=id;
+    public void setTile(int x, int y, int id) {
+        tiles[x][y] = id;
     }
 
     /*! \fn private void LoadWorld(int mapNumber)
@@ -85,31 +75,24 @@ public class Map
 
         \param mapNumber folosit pentru a incarca harta in functie de nivelul la care se afla eroul.
      */
-    public void LoadWorld(int mapNumber)
-    {
+    public void LoadWorld(int mapNumber) {
         //atentie latimea si inaltimea trebuiesc corelate cu dimensiunile ferestrei sau
         //se poate implementa notiunea de camera/cadru de vizualizare al hartii
-            ///Se stabileste latimea hartii in numar de dale.
+        ///Se stabileste latimea hartii in numar de dale.
         width = 40;
-            ///Se stabileste inaltimea hartii in numar de dale
+        ///Se stabileste inaltimea hartii in numar de dale
         height = 32;
-            ///Se construieste matricea de coduri de dale
+        ///Se construieste matricea de coduri de dale
         tiles = new int[width][height];
-            //Se incarca matricea cu coduri
-        for(int y = 0; y < height; y++)
-        {
-            for(int x = 0; x < width; x++)
-            {
-                if(mapNumber==0) {
+        //Se incarca matricea cu coduri
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (mapNumber == 0) {
                     tiles[x][y] = PlayStateMap(y, x);
-                }
-                else if(mapNumber==1)
-                {
-                    tiles[x][y] = Level1Map(y,x);
-                }
-                else if(mapNumber==2)
-                {
-                    tiles[x][y]=Level2Map(y,x);
+                } else if (mapNumber == 1) {
+                    tiles[x][y] = Level1Map(y, x);
+                } else if (mapNumber == 2) {
+                    tiles[x][y] = Level2Map(y, x);
                 }
             }
         }
@@ -121,9 +104,8 @@ public class Map
         \param x linia pe care se afla codul dalei de interes.
         \param y coloana pe care se afla codul dalei de interes.
      */
-    private int PlayStateMap(int y ,int x)
-    {
-            ///Definire statica a matricei de coduri de dale.
+    private int PlayStateMap(int y, int x) {
+        ///Definire statica a matricei de coduri de dale.
         final int[][] map = {
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                 {1, 3, 3, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -168,8 +150,7 @@ public class Map
         \param x linia pe care se afla codul dalei de interes.
         \param y coloana pe care se afla codul dalei de interes.
      */
-    private int Level1Map(int y ,int x)
-    {
+    private int Level1Map(int y, int x) {
         ///Definire statica a matricei de coduri de dale.
         final int[][] map = {
                 {1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 1, 4, 4, 4, 1, 4, 1, 1, 4, 1, 4, 1, 4, 1, 4, 4, 4, 1, 4, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -201,7 +182,7 @@ public class Map
                 {1, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 5, 1},
                 {1, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 5, 1},
                 {10, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 5, 1},
-                {1, 5,11, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3,11, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 11, 5, 1},
+                {1, 5, 11, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 11, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 11, 5, 1},
                 {1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         };
@@ -215,8 +196,7 @@ public class Map
         \param x linia pe care se afla codul dalei de interes.
         \param y coloana pe care se afla codul dalei de interes.
      */
-    private int Level2Map(int y ,int x)
-    {
+    private int Level2Map(int y, int x) {
         ///Definire statica a matricei de coduri de dale.
         final int[][] map = {
                 {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4},

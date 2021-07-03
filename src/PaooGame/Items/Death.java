@@ -6,18 +6,18 @@ import PaooGame.RefLinks;
 /*! \class Death extends Enemy
     \brief Implementeaza inamicul "specializat" ce portretizeaza "Moartea" - The Horseman of Death
  */
-public class Death extends Enemy{
-        /*! \fn public Death(RefLinks refLink, float x, float y, int width, int height, float speed, int life)
-        \brief Constructor de initializare al clasei Enemy
+public class Death extends Enemy {
+    /*! \fn public Death(RefLinks refLink, float x, float y, int width, int height, float speed, int life)
+    \brief Constructor de initializare al clasei Enemy
 
-        \param refLink Referinta catre obiectul shortcut (care retine alte referinte utile/necesare in joc).
-        \param x Pozitia de start pe axa X a inamicului.
-        \param y Pozitia de start pe axa Y a inamicului.
-        \param width Latimea imaginii inamicului.
-        \param height Inaltimea imaginii inamicului.
-        \param speed Viteza inamicului.
-        \param life Viata (lifepoints) inamicului.
-     */
+    \param refLink Referinta catre obiectul shortcut (care retine alte referinte utile/necesare in joc).
+    \param x Pozitia de start pe axa X a inamicului.
+    \param y Pozitia de start pe axa Y a inamicului.
+    \param width Latimea imaginii inamicului.
+    \param height Inaltimea imaginii inamicului.
+    \param speed Viteza inamicului.
+    \param life Viata (lifepoints) inamicului.
+ */
     public Death(RefLinks refLink, float x, float y, int width, int height, float speed, int life) {
         super(refLink, x, y, width, height, speed, life);
         ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea implicita(normala)
@@ -40,6 +40,6 @@ public class Death extends Enemy{
     @Override
     public void Update(Hero hero) {
         super.Update(hero);
-        followHero(hero, Assets.enemy1Up,Assets.enemy1Down);
+        followHero(hero, Assets.enemy1Up, Assets.enemy1Down);
     }
 }

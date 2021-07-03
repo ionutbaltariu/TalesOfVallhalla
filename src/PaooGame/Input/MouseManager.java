@@ -19,8 +19,7 @@ public class MouseManager extends MouseAdapter {
     /*! \fn public MouseManager
         \brief constructor nefolosit in stagiul curent al proiectului.
      */
-    public MouseManager()
-    {
+    public MouseManager() {
         // nu avem ce initializa in constructor.
     }
 
@@ -31,13 +30,13 @@ public class MouseManager extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         //detectarea click-ului apasat (left/right)
-        if(e.getButton()==MouseEvent.BUTTON1) //left click = BUTTON1
+        if (e.getButton() == MouseEvent.BUTTON1) //left click = BUTTON1
         {
             leftPressed = true;
-            System.out.println(e.getX()+", "+e.getY());
+            System.out.println(e.getX() + ", " + e.getY());
         }
-        if(e.getButton()==MouseEvent.BUTTON3) //right click = BUTTON3
-            rightPressed=true;
+        if (e.getButton() == MouseEvent.BUTTON3) //right click = BUTTON3
+            rightPressed = true;
     }
 
     /*! \fn public void mouseReleased(MouseEvent e)
@@ -46,11 +45,11 @@ public class MouseManager extends MouseAdapter {
       */
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(e.getButton()==MouseEvent.BUTTON1) {
+        if (e.getButton() == MouseEvent.BUTTON1) {
             leftPressed = false;
         }
-        if(e.getButton()==MouseEvent.BUTTON3){
-            rightPressed=false;
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            rightPressed = false;
         }
     }
 
@@ -59,8 +58,8 @@ public class MouseManager extends MouseAdapter {
       */
     @Override
     public void mouseMoved(MouseEvent e) {
-        mouseX=e.getX();
-        mouseY=e.getY();
+        mouseX = e.getX();
+        mouseY = e.getY();
     }
 
     /*! \fn public boolean leftClickPressed()
@@ -71,7 +70,7 @@ public class MouseManager extends MouseAdapter {
 
              \param leftPressed este un boolean care contorizeaza daca este apasat sau nu click-ul stang.
           */
-    public boolean leftClickPressed(){
+    public boolean leftClickPressed() {
         return leftPressed;
     }
 
@@ -81,7 +80,7 @@ public class MouseManager extends MouseAdapter {
 
                     \param rightPressed este un boolean care contorizeaza daca este apasat sau nu click-ul drept.
           */
-    public boolean rightClickPressed(){
+    public boolean rightClickPressed() {
         return rightPressed;
     }
 
@@ -89,16 +88,15 @@ public class MouseManager extends MouseAdapter {
         \brief Returneaza pozitia pe axa X a cursorului.
                Poate fi folosit pt debugging/determinare experimentala de coordonate.
      */
-    public int getMouseX()
-    {
+    public int getMouseX() {
         return mouseX;
     }
+
     /*! \fn public int getMouseY()
         \brief Returneaza pozitia pe axa Y a cursorului.
                Poate fi folosit pt debugging/determinare experimentala de coordonate.
      */
-    public int getMouseY()
-    {
+    public int getMouseY() {
         return mouseY;
     }
 }

@@ -12,13 +12,13 @@ import java.sql.SQLException;
 /*! \class Level1State extends State
     \brief Implementeaza nivelul 1.
  */
-public class Level1State extends PlayState{
+public class Level1State extends PlayState {
 
-    public  static Map level1;
+    public static Map level1;
     public static boolean wasBoss1Defeated;
-    private final long boss1Timer=30000000000L;
     public static Dragon enemyDragon;           /*!< Referinta catre inamicul Dragon.*/
-    public static int timer1=0;
+    public static int timer1 = 0;
+    private final long boss1Timer = 30000000000L;
 
     /*! \fn public Level1State(RefLinks refLink)
             \brief Constructorul de initializare al clasei
@@ -28,12 +28,10 @@ public class Level1State extends PlayState{
     public Level1State(RefLinks refLink) {
         super(refLink);
         level1 = new Map(refLink, 1);
-        wasBoss1Defeated=false;
+        wasBoss1Defeated = false;
         try {
             enemyDragon = new Dragon(refLink, 640, 512, 96, 96, 1.7f + 0.2f * refLink.GetDatabase().getDifficulty(), 1);
-        }
-        catch( SQLException e)
-        {
+        } catch (SQLException e) {
             System.err.println("Eroare in Level1State->Constructor.");
         }
     }
@@ -42,11 +40,9 @@ public class Level1State extends PlayState{
         \brief Actualizeaza starea curenta a jocului.
      */
     @Override
-    public void Update(){
-        if(State.GetPreviousState()==refLink.GetGame().getMenuState())
-        {
-            if(MenuState.getLoadButtonFlag())
-            {
+    public void Update() {
+        if (State.GetPreviousState() == refLink.GetGame().getMenuState()) {
+            if (MenuState.getLoadButtonFlag()) {
                 loadFromDB();
             }
             MenuState.setLoadButtonFlag(false);
@@ -54,25 +50,22 @@ public class Level1State extends PlayState{
             Assets.music.start();
         }
         MenuState.setLoadButtonFlag(false);
-        System.out.println(hero.GetX()+", "+hero.GetY());
+        System.out.println(hero.GetX() + ", " + hero.GetY());
         hero.Update();
-        wasBoss1Defeated = isInFight(boss1Timer/1000000000);
-        if(!wasBoss1Defeated) {
+        wasBoss1Defeated = isInFight(boss1Timer / 1000000000);
+        if (!wasBoss1Defeated) {
             enemyDragon.Update(hero);
-            if(level1.tiles[(int)(hero.GetX()/ Tile.TILE_WIDTH)+1][(int)(hero.GetY()/Tile.TILE_HEIGHT)+1]==11)
-            {
+            if (level1.tiles[(int) (hero.GetX() / Tile.TILE_WIDTH) + 1][(int) (hero.GetY() / Tile.TILE_HEIGHT) + 1] == 11) {
                 try {
                     hero.SetScore(hero.GetScore() + 30 * refLink.GetDatabase().getDifficulty());
-                }
-                catch (SQLException e)
-                {
+                } catch (SQLException e) {
                     System.err.println("Eroare in Level1State->Update->[..].getDifficulty()");
                 }
-                level1.tiles[(int)(hero.GetX()/Tile.TILE_WIDTH)+1][(int)(hero.GetY()/Tile.TILE_HEIGHT)+1]=3;
+                level1.tiles[(int) (hero.GetX() / Tile.TILE_WIDTH) + 1][(int) (hero.GetY() / Tile.TILE_HEIGHT) + 1] = 3;
             }
         }
 
-        if(wasBoss1Defeated) {
+        if (wasBoss1Defeated) {
             if ((int) (hero.GetX() / Tile.TILE_WIDTH) == 0) {
                 if ((int) (hero.GetY() / Tile.TILE_HEIGHT) == 27) {
                     hero.SetX(1250);
@@ -82,15 +75,14 @@ public class Level1State extends PlayState{
                 }
             }
         }
-        if(refLink.GetKeyManager().esc) {
+        if (refLink.GetKeyManager().esc) {
             State.SetState(refLink.GetGame().getPauseState());
         }
 
-        if(isInFight(timer1))
-        {
-            wasBoss1Defeated=true;
+        if (isInFight(timer1)) {
+            wasBoss1Defeated = true;
         }
-        if(hero.isDead()) {
+        if (hero.isDead()) {
             died(level1, 1);
             enemyDragon.SetX(640);
             enemyDragon.SetY(512);
@@ -109,21 +101,20 @@ public class Level1State extends PlayState{
         g.setFont(new Font("Serif", Font.PLAIN, 48));
 
         level1.Draw(g);
-        if(!wasBoss1Defeated) {
-            g.drawString(Long.toString(boss1Timer/1000000000L-timer1),80,refLink.GetHeight()-50);
-            if(Assets.secondElapsed())
-                timer1+=1;
+        if (!wasBoss1Defeated) {
+            g.drawString(Long.toString(boss1Timer / 1000000000L - timer1), 80, refLink.GetHeight() - 50);
+            if (Assets.secondElapsed())
+                timer1 += 1;
             enemyDragon.Draw(g);
-            g.drawString(Long.toString(boss1Timer/1000000000L-timer1),80,refLink.GetHeight()-50);
+            g.drawString(Long.toString(boss1Timer / 1000000000L - timer1), 80, refLink.GetHeight() - 50);
         }
         hero.Draw(g);
 
-        g.drawString("Score:",refLink.GetWidth()-220,refLink.GetHeight()-100);
-        g.drawString(Integer.toString(hero.GetScore()),refLink.GetWidth()-220,refLink.GetHeight()-50);
+        g.drawString("Score:", refLink.GetWidth() - 220, refLink.GetHeight() - 100);
+        g.drawString(Integer.toString(hero.GetScore()), refLink.GetWidth() - 220, refLink.GetHeight() - 50);
 
-        if(hero.isDead())
-        {
-            g.drawImage(Assets.deadState,0,0,refLink.GetWidth(),refLink.GetHeight(),null);
+        if (hero.isDead()) {
+            g.drawImage(Assets.deadState, 0, 0, refLink.GetWidth(), refLink.GetHeight(), null);
             drawHoverObject(g);
         }
     }
@@ -133,9 +124,8 @@ public class Level1State extends PlayState{
                Returneaza true daca s-a terminat batalia.
 
      */
-    private boolean isInFight( long fightTime)
-    {
-            return fightTime - timer1< 0;
+    private boolean isInFight(long fightTime) {
+        return fightTime - timer1 < 0;
     }
 
     /*! \fn protected void retry()
@@ -148,7 +138,7 @@ public class Level1State extends PlayState{
         super.retry();
         enemyDragon.SetX(640);
         enemyDragon.SetY(512);
-        timer1=0;
+        timer1 = 0;
     }
 
     /*! \fn protected void loadFromDB() throws SQLException
@@ -157,18 +147,16 @@ public class Level1State extends PlayState{
 
      */
     @Override
-    protected void loadFromDB(){
+    protected void loadFromDB() {
         super.loadFromDB();
         try {
             enemyDragon.SetX(refLink.GetDatabase().getEnemy1X());
             enemyDragon.SetX(refLink.GetDatabase().getEnemy1Y());
             timer1 = (int) refLink.GetDatabase().getIterator1();
             wasBoss1Defeated = refLink.GetDatabase().wasBoss1Defeated() == 1;
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             System.err.println("Eroare in Level1State->LoadFromDB.");
         }
-        readFromFile("matrix.txt",level1.tiles);
+        readFromFile("matrix.txt", level1.tiles);
     }
 }

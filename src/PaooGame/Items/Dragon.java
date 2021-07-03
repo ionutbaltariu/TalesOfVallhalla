@@ -7,7 +7,7 @@ import PaooGame.RefLinks;
 /*! \class Dragon extends Enemy
     \brief Implementeaza inamicul "specializat" ce portretizeaza un dragon. - Baldur
  */
-public class Dragon extends Enemy{
+public class Dragon extends Enemy {
     /*! \fn public Dragon(RefLinks refLink, float x, float y, int width, int height, float speed, int life)
         \brief Constructor de initializare al clasei Enemy
 
@@ -40,9 +40,9 @@ public class Dragon extends Enemy{
            Functia suprascrie cea din clasa parinte pentru a da niste imagini concrete inamicului.
  */
     @Override
-    public void Update(Hero hero){
+    public void Update(Hero hero) {
         super.Update(hero);
-        followHero(hero,Assets.enemy2Up,Assets.enemy2Down);
+        followHero(hero, Assets.enemy2Up, Assets.enemy2Down);
     }
 
 

@@ -5,14 +5,13 @@ import PaooGame.Graphics.Assets;
 /*! \class MagmaTile extends Tile
     \brief Abstractizeaza notiunea de dala de tip lava.
  */
-public class MagmaTile extends Tile{
+public class MagmaTile extends Tile {
     /*! \fn public MagmaTile(int id)
    \brief Constructorul de initializare al clasei
 
    \param id Id-ul dalei util in desenarea hartii.
     */
-    public MagmaTile(int id)
-    {
+    public MagmaTile(int id) {
         /// Apel al constructorului clasei de baza
         super(Assets.magma, id);
     }
@@ -21,8 +20,7 @@ public class MagmaTile extends Tile{
         \brief Suprascrie metoda IsSolid() din clasa de baza in sensul ca va fi luat in calcul in caz de coliziune.
      */
     @Override
-    public boolean IsSolid()
-    {
+    public boolean IsSolid() {
         return true;
     }
 }

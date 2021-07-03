@@ -5,14 +5,13 @@ import PaooGame.Graphics.Assets;
 /*! \class HouseWindowTile extends Tile
     \brief Abstractizeaza notiunea de dala de tip geam.
  */
-public class HouseWindowTile extends Tile{
+public class HouseWindowTile extends Tile {
     /*! \fn public HouseWindowTile(int id)
 \brief Constructorul de initializare al clasei
 
 \param id Id-ul dalei util in desenarea hartii.
 */
-    public HouseWindowTile(int id)
-    {
+    public HouseWindowTile(int id) {
         /// Apel al constructorului clasei de baza
         super(Assets.houseWindow, id);
     }
@@ -21,8 +20,7 @@ public class HouseWindowTile extends Tile{
         \brief Suprascrie metoda IsSolid() din clasa de baza in sensul ca va fi luat in calcul in caz de coliziune.
      */
     @Override
-    public boolean IsSolid()
-    {
+    public boolean IsSolid() {
         return true;
     }
 }

@@ -10,8 +10,7 @@ import java.awt.event.KeyListener;
     In program trebuie sa se tina cont de flagul aferent tastei de interes. Daca flagul respectiv este true inseamna
     ca tasta respectiva a fost apasata si false nu a fost apasata.
  */
-public class KeyManager implements KeyListener
-{
+public class KeyManager implements KeyListener {
     private final boolean[] keys; /*!< Vector de flaguri pentru toate tastele. Tastele vor fi regasite dupa cod [0 - 255]*/
     public boolean up;      /*!< Flag pentru tasta "W" apasata.*/
     public boolean down;    /*!< Flag pentru tasta "S" apasata.*/
@@ -23,20 +22,18 @@ public class KeyManager implements KeyListener
     /*! \fn public KeyManager()
         \brief Constructorul clasei.
      */
-    public KeyManager()
-    {
-            ///Constructie vector de flaguri aferente tastelor.
+    public KeyManager() {
+        ///Constructie vector de flaguri aferente tastelor.
         keys = new boolean[256];
     }
 
 
-    public void Update()
-    {
-        up    = keys[KeyEvent.VK_W];
-        down  = keys[KeyEvent.VK_S];
-        left  = keys[KeyEvent.VK_A];
+    public void Update() {
+        up = keys[KeyEvent.VK_W];
+        down = keys[KeyEvent.VK_S];
+        left = keys[KeyEvent.VK_A];
         right = keys[KeyEvent.VK_D];
-        esc   = keys[KeyEvent.VK_ESCAPE];
+        esc = keys[KeyEvent.VK_ESCAPE];
         space = keys[KeyEvent.VK_SPACE];
     }
 
@@ -46,9 +43,8 @@ public class KeyManager implements KeyListener
          \param e obiectul eveniment de tastatura.
      */
     @Override
-    public void keyPressed(KeyEvent e)
-    {
-            ///se retine in vectorul de flaguri ca o tasta a fost apasata.
+    public void keyPressed(KeyEvent e) {
+        ///se retine in vectorul de flaguri ca o tasta a fost apasata.
         keys[e.getKeyCode()] = true;
     }
 
@@ -58,10 +54,9 @@ public class KeyManager implements KeyListener
          \param e obiectul eveniment de tastatura.
      */
     @Override
-    public void keyReleased(KeyEvent e)
-    {
-            ///se retine in vectorul de flaguri ca o tasta a fost eliberata.
-            keys[e.getKeyCode()] = false;
+    public void keyReleased(KeyEvent e) {
+        ///se retine in vectorul de flaguri ca o tasta a fost eliberata.
+        keys[e.getKeyCode()] = false;
     }
 
     /*! \fn public void keyTyped(KeyEvent e)
@@ -69,8 +64,7 @@ public class KeyManager implements KeyListener
         Momentan aceasta functie nu este utila in program.
      */
     @Override
-    public void keyTyped(KeyEvent e)
-    {
+    public void keyTyped(KeyEvent e) {
 
     }
 
